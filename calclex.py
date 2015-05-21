@@ -91,6 +91,15 @@ t_MODEQUAL = r'%='
 t_PLUSPLUS = r'\+\+'
 t_MINUSMINUS = r'\-\-'
 
+### CYAN ###
+
+t_COMMA = r'\,'
+t_BAR = r'\|'
+t_EMPTY = r'\'\''
+t_EQUAL = r'\='
+
+############
+
 t_GREATEREQ = r'>='
 t_LESSEREQ = r'<='
 
