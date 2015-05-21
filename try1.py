@@ -13,7 +13,62 @@ def p_statementTop(p):
                   | statement'''
 
 def p_statement(p):
-    '''statement : declaration statementTop'''
+    '''statement : declaration statementTop
+                | expression statementTop'''
+
+def p_expression(p):
+  '''expression : ArithmeticExpression
+                | RelationExpression'''
+#                 | listEval
+#                 | list
+#                 | union
+#                 | RelationExpression'''
+
+def p_booleanValue(p):
+  '''booleanValue : TRUE 
+                  | FALSE'''
+
+def p_Iterator(p):
+  '''Iterator : PLUSPLUS
+              | MINUSMINUS
+              | '''
+
+def p_ArithmeticExpression(p):
+  'ArithmeticExpression : LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN'
+
+def p_RelationExpression(p):
+  '''RelationExpression : LPAREN Operand ArithmeticOperator Operand RPAREN '''
+
+def p_Compound(p):
+  '''Compound : AND
+              | OR '''
+
+def p_Operand(p):
+  '''Operand : IDENTIFIER
+             | CONSTANT
+             | booleanValue'''
+
+def p_ArithmeticOperator(p):
+  '''ArithmeticOperator : PLUS
+                        | MINUS
+                        | MULT
+                        | DIV
+                        | MOD'''
+
+#def p_list(p):
+#    '''listEval : LBRACK listElem RBRACK '''
+
+#def p_listElem(p):
+#  '''listElem : validListUnionValues
+#              | validListUnionValues , listElem
+#              | None '''
+
+
+#def p_listEval(p):
+#  '''listEval : IDENTIFIER LBRACK CONSTANT RBRACK '''
+
+#def p_listDec(p):
+#  '''listDec : IDENTIFIER = list SEMICOLON'''
 
 def p_declaration(p):
     '''declaration : identifierDeclaration'''
@@ -21,6 +76,11 @@ def p_declaration(p):
 def p_identifierDeclaration(p): 
   'identifierDeclaration : dataType IDENTIFIER SEMICOLON'
   print p[2]
+
+#def p_union(p):
+#  '''union : { unionElement }'''
+
+
   
 def p_dataType(p):
   '''dataType : INT

@@ -36,7 +36,6 @@ reserved = {
   'fi': 'FI',
   'end':'END',
   'return':'RETURN',
-  'boolean':'BOOLEAN',
   'not':'NOT',
   'elif':'ELIF',
   'else:':'ELSE',
@@ -55,17 +54,25 @@ reserved = {
   '.split':'SPLIT',
   '.strip':'STRIP',
   '.concat':'CONCAT',
-  '.copy':'COPY'
-
+  '.copy':'COPY',
+  'True':'TRUE',
+  'False':'FALSE'
 }
 
-tokens = ['MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'CHARVALUE', 'CHARING', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT','NEGCONSTANT', 'IDENTIFIER']+ list(reserved.values())
+tokens = ['GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'CHARVALUE', 'CHARING', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT','NEGCONSTANT', 'IDENTIFIER']+ list(reserved.values())
 
 # Regular expression rules for simple tokens
 
 
 literals = "+=*/|';\"!%.-:,><{}"
 
+t_LESSTHAN = r'<'
+t_GREATERTHAN = r'>'
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_MULT = r'\*'
+t_DIV = r'\/'
+t_MOD = r'\%'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_COLON = r'\:'
@@ -86,6 +93,7 @@ t_MINUSMINUS = r'\-\-'
 
 t_GREATEREQ = r'>='
 t_LESSEREQ = r'<='
+
 def t_CHARVALUE(t):
   r'\'.\''
   t.value = t.value[1]
@@ -179,10 +187,10 @@ data = '''
 lexer.input(data)
 
 # Tokenize
-#x = 0
-#for tok in lexer:
+x = 0
+for tok in lexer:
 #  x = x + 1
-#  print tok
+  print tok
   # print find_column(data, tok)
 
 # print "THERE ARE A TOTAL OF ", x, "TOKENS"

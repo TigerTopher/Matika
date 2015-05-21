@@ -5,9 +5,9 @@ _tabversion = '3.5'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BACFA5B8819311824C17FED24CF8E13B'
+_lr_signature = 'E3EF1A7BFBA61ACCE11C591FC54ECDFA'
     
-_lr_action_items = {'END':([0,9,12,16,],[2,-5,2,-6,]),'SEMICOLON':([14,],[16,]),'INT':([0,9,12,16,],[13,-5,13,-6,]),'DOUBLE':([0,9,12,16,],[4,-5,4,-6,]),'FLOAT':([0,9,12,16,],[5,-5,5,-6,]),'LONG':([0,9,12,16,],[6,-5,6,-6,]),'CHAR':([0,9,12,16,],[7,-5,7,-6,]),'BOOLEAN':([0,9,12,16,],[10,-5,10,-6,]),'IDENTIFIER':([4,5,6,7,8,10,13,],[-12,-11,-10,-9,14,-8,-7,]),'$end':([1,2,3,11,15,],[-1,-2,0,-3,-4,]),}
+_lr_action_items = {'CONSTANT':([3,11,29,30,31,32,33,34,36,],[20,20,-19,20,-22,-20,-21,-23,20,]),'CHAR':([0,8,9,10,12,18,35,39,40,],[2,-6,-7,-24,2,2,-25,-12,-13,]),'LESSTHAN':([0,8,9,10,12,18,35,39,40,],[3,-6,-7,-24,3,3,-25,-12,-13,]),'DIV':([19,20,21,22,23,24,26,],[-18,-17,31,-9,-16,-8,31,]),'TRUE':([3,11,29,30,31,32,33,34,36,],[24,24,-19,24,-22,-20,-21,-23,24,]),'MINUS':([19,20,21,22,23,24,26,],[-18,-17,32,-9,-16,-8,32,]),'MULT':([19,20,21,22,23,24,26,],[-18,-17,33,-9,-16,-8,33,]),'RPAREN':([19,20,22,23,24,38,],[-18,-17,-9,-16,-8,40,]),'SEMICOLON':([25,],[35,]),'LONG':([0,8,9,10,12,18,35,39,40,],[4,-6,-7,-24,4,4,-25,-12,-13,]),'PLUS':([19,20,21,22,23,24,26,],[-18,-17,29,-9,-16,-8,29,]),'IDENTIFIER':([2,3,4,7,11,14,15,16,17,29,30,31,32,33,34,36,],[-28,23,-29,25,23,-31,-30,-26,-27,-19,23,-22,-20,-21,-23,23,]),'$end':([1,5,6,13,27,28,],[-1,-3,-2,0,-4,-5,]),'END':([0,8,9,10,12,18,35,39,40,],[6,-6,-7,-24,6,6,-25,-12,-13,]),'GREATERTHAN':([19,20,22,23,24,37,],[-18,-17,-9,-16,-8,39,]),'LPAREN':([0,8,9,10,12,18,35,39,40,],[11,-6,-7,-24,11,11,-25,-12,-13,]),'FALSE':([3,11,29,30,31,32,33,34,36,],[22,22,-19,22,-22,-20,-21,-23,22,]),'INT':([0,8,9,10,12,18,35,39,40,],[16,-6,-7,-24,16,16,-25,-12,-13,]),'DOUBLE':([0,8,9,10,12,18,35,39,40,],[14,-6,-7,-24,14,14,-25,-12,-13,]),'FLOAT':([0,8,9,10,12,18,35,39,40,],[15,-6,-7,-24,15,15,-25,-12,-13,]),'BOOLEAN':([0,8,9,10,12,18,35,39,40,],[17,-6,-7,-24,17,17,-25,-12,-13,]),'MOD':([19,20,21,22,23,24,26,],[-18,-17,34,-9,-16,-8,34,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statementTop':([0,12,],[1,15,]),'statementAug':([0,],[3,]),'dataType':([0,12,],[8,8,]),'identifierDeclaration':([0,12,],[9,9,]),'statement':([0,12,],[11,11,]),'declaration':([0,12,],[12,12,]),}
+_lr_goto_items = {'statementTop':([0,12,18,],[1,27,28,]),'ArithmeticOperator':([21,26,],[30,36,]),'statementAug':([0,],[13,]),'ArithmeticExpression':([0,12,18,],[8,8,8,]),'RelationExpression':([0,12,18,],[9,9,9,]),'dataType':([0,12,18,],[7,7,7,]),'identifierDeclaration':([0,12,18,],[10,10,10,]),'statement':([0,12,18,],[5,5,5,]),'declaration':([0,12,18,],[12,12,12,]),'Operand':([3,11,30,36,],[21,26,37,38,]),'booleanValue':([3,11,30,36,],[19,19,19,19,]),'expression':([0,12,18,],[18,18,18,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -30,12 +30,31 @@ _lr_productions = [
   ('statementTop -> END','statementTop',1,'p_statementTop','try1.py',12),
   ('statementTop -> statement','statementTop',1,'p_statementTop','try1.py',13),
   ('statement -> declaration statementTop','statement',2,'p_statement','try1.py',16),
-  ('declaration -> identifierDeclaration','declaration',1,'p_declaration','try1.py',19),
-  ('identifierDeclaration -> dataType IDENTIFIER SEMICOLON','identifierDeclaration',3,'p_identifierDeclaration','try1.py',22),
-  ('dataType -> INT','dataType',1,'p_dataType','try1.py',26),
-  ('dataType -> BOOLEAN','dataType',1,'p_dataType','try1.py',27),
-  ('dataType -> CHAR','dataType',1,'p_dataType','try1.py',28),
-  ('dataType -> LONG','dataType',1,'p_dataType','try1.py',29),
-  ('dataType -> FLOAT','dataType',1,'p_dataType','try1.py',30),
-  ('dataType -> DOUBLE','dataType',1,'p_dataType','try1.py',31),
+  ('statement -> expression statementTop','statement',2,'p_statement','try1.py',17),
+  ('expression -> ArithmeticExpression','expression',1,'p_expression','try1.py',20),
+  ('expression -> RelationExpression','expression',1,'p_expression','try1.py',21),
+  ('booleanValue -> TRUE','booleanValue',1,'p_booleanValue','try1.py',28),
+  ('booleanValue -> FALSE','booleanValue',1,'p_booleanValue','try1.py',29),
+  ('Iterator -> PLUSPLUS','Iterator',1,'p_Iterator','try1.py',32),
+  ('Iterator -> MINUSMINUS','Iterator',1,'p_Iterator','try1.py',33),
+  ('ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN','ArithmeticExpression',5,'p_ArithmeticExpression','try1.py',36),
+  ('RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN','RelationExpression',5,'p_RelationExpression','try1.py',39),
+  ('Compound -> AND','Compound',1,'p_Compound','try1.py',42),
+  ('Compound -> OR','Compound',1,'p_Compound','try1.py',43),
+  ('Operand -> IDENTIFIER','Operand',1,'p_Operand','try1.py',46),
+  ('Operand -> CONSTANT','Operand',1,'p_Operand','try1.py',47),
+  ('Operand -> booleanValue','Operand',1,'p_Operand','try1.py',48),
+  ('ArithmeticOperator -> PLUS','ArithmeticOperator',1,'p_ArithmeticOperator','try1.py',51),
+  ('ArithmeticOperator -> MINUS','ArithmeticOperator',1,'p_ArithmeticOperator','try1.py',52),
+  ('ArithmeticOperator -> MULT','ArithmeticOperator',1,'p_ArithmeticOperator','try1.py',53),
+  ('ArithmeticOperator -> DIV','ArithmeticOperator',1,'p_ArithmeticOperator','try1.py',54),
+  ('ArithmeticOperator -> MOD','ArithmeticOperator',1,'p_ArithmeticOperator','try1.py',55),
+  ('declaration -> identifierDeclaration','declaration',1,'p_declaration','try1.py',73),
+  ('identifierDeclaration -> dataType IDENTIFIER SEMICOLON','identifierDeclaration',3,'p_identifierDeclaration','try1.py',76),
+  ('dataType -> INT','dataType',1,'p_dataType','try1.py',85),
+  ('dataType -> BOOLEAN','dataType',1,'p_dataType','try1.py',86),
+  ('dataType -> CHAR','dataType',1,'p_dataType','try1.py',87),
+  ('dataType -> LONG','dataType',1,'p_dataType','try1.py',88),
+  ('dataType -> FLOAT','dataType',1,'p_dataType','try1.py',89),
+  ('dataType -> DOUBLE','dataType',1,'p_dataType','try1.py',90),
 ]
