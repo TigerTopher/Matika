@@ -16,7 +16,7 @@ def p_statement(p):
     '''statement : declaration statementTop
                 | expression statementTop'''
 
-########## CYAN ################
+# # # # # # # # # C Y A N # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 def p_statement(p):
     '''statement : declaration statementTop
@@ -25,21 +25,132 @@ def p_statement(p):
                 | AssignmentHead statementTop
                 | WhileLoop statementTop
                 | ForLoop statementTop
-                | DoWhileLoop statementTop'''
+                | DoWhileLoop statementTop
+                | unionAdd statementTop
+                | unionKeys statementTop
+                | typeCastToInt statementTop
+                | typecastToFloat statementTop
+                | FunctionDefinition statementTop
+                | FunctionCall statementTop
+                | returnDec statementTop
+                | stringOpStatement statementTop
+                | read t_LPAREN IDENTIFIER t_RPAREN t_SEMICOLON statementTop
+                | print t_LPAREN content t_RPAREN t_SEMICOLON statementTop'''              
 
 def p_statement1(p):
     '''statement1 : declaration
                 | expression
                 | IfThenElse
-                | AssignmentHead'''
+                | AssignmentHead
+                | WhileLoop
+                | ForLoop
+                | DoWhileLoop
+                | unionAdd
+                | unionKeys
+                | typeCastToInt
+                | typecastToFloat
+                | FunctionDefinition
+                | FunctionCall
+                | returnDec
+                | stringOpStatement
+                | read t_LPAREN IDENTIFIER t_RPAREN t_SEMICOLON
+                | print t_LPAREN content t_RPAREN t_SEMICOLON'''
 
-# # # # #
-# pacheck na lang ng gawa ko, feel ko tama naman eh hahah
-# booleanValue
-# to
-# typecastToFloat
-# Sorry inaantok na talaga ako toph, patuloy ples, arigatou gozaimasu!!! oyasumi
-# # # # #
+def p_booleanValue(p):
+    '''booleanValue : TRUE
+                    | FALSE'''
+
+def p_content(p):
+    '''content : toPrint morePrint'''
+
+def p_morePrint(p):
+    '''morePrint : t_PLUS toPrint morePrint
+                | t_EMPTY'''
+
+def p_toPrint(p):
+    '''toPrint : t_QUOTE string t_QUOTE
+              | number
+              | IDENTIFIER'''
+
+def p_declaration(p):
+    '''declaration : identifierDeclaration
+                  | listDec
+                  | unionDec'''
+
+def p_identifierDeclaration(p):
+    '''identifierDeclaration : dataType IDENTIFIER t_SEMICOLON
+                            | dataType IDENTIFIER t_LBRACK CONSTANT t_RBRACK t_SEMICOLON
+                            | dataType IDENTIFIER t_LBRACK CONSTANT t_RBRACK t_EQUAL expression t_SEMICOLON
+                            | dataType IDENTIFIER t_EQUAL expression t_SEMICOLON'''
+
+def p_dataType(p):
+  '''dataType : INT
+            | BOOLEAN
+            | CHAR
+            | LONG
+            | FLOAT
+            | DOUBLE'''
+  print p[1]
+
+def p_stringOPStatement(p):
+    '''stringOpStatement : IDENTIFIER stringOP t_LPAREN string t_RPAREN t_SEMICOLON
+                        | IDENTIFIER stringOp t_LPAREN IDENTIFIER t_RPAREN t_SEMICOLON'''
+
+def p_stringOp(p):
+    '''stringOp : SPLIT
+                | STRIP 
+                | CONCAT
+                | COPY'''
+
+def p_listDec(p):
+    '''listDec : IDENTIFIER t_EQUAL list t_SEMICOLON'''
+
+def p_list(p):
+    '''list : t_LBRACK listElem t_RBRACK'''
+
+def p_listElem(p):
+    '''listElem : validListUnionValues
+                | validListUnionValues t_COMMA listElem
+                | t_EMPTY'''
+
+def p_listEval(p):
+    '''listEval : IDENTIFIER t_LBRACK CONSTANT t_RBRACK'''
+
+def p_unionDec(p):
+    '''unionDec : IDENTIFIER t_EQUAL uninon t_SEMICOLON'''
+
+def p_union(p):
+    '''union : t_LCURLY unionElement t_RCURLY'''
+
+def p_unionElement(p):
+    '''unionElement : string t_EQUAL validListUnionValues
+                  | string t_EQUAL validListUnionValues t_COMMA unionElement
+                  | t_EMPTY'''
+
+def p_unionAdd(p):
+    '''unionAdd : IDENTIFIER t_LBRACK string t_RBRACK t_EQUAL validListUnionValues t_SEMICOLON'''
+
+def p_validListUnionValues(p):
+    '''validListUnionValues : intValue
+                          | longValue
+                          | floatValue
+                          | doubleValue
+                          | charValue
+                          | booleanValue
+                          | stringValue
+                          | listValue'''
+
+def p_unionKeys(p):
+    '''unionKeys : IDENTIFIER KEYS t_SEMICOLON'''
+
+def p_unionEval(p):
+    '''unionEval : IDENTIFIER t_ARROW string'''
+
+def p_typeCastToInt(p):
+    '''typeCastToInt : TC_INT IDENTIFIER t_SEMICOLON'''
+
+def p_typeCastToFloat(p):
+    '''typecastToFloat : TC_FLOAT IDENTIFIER t_SEMICOLON'''
 
 def p_WhileLoop(p):
     '''WhileLoop : WHILE Condition t_COLON Body'''
@@ -178,7 +289,7 @@ def p_returnDec(p):
                 | RETURN expression t_SEMICOLON'''
 
 
-################################
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 def p_expression(p):
   '''expression : ArithmeticExpression
