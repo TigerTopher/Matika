@@ -1,0 +1,302 @@
+Created by PLY version 3.6 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DO
+    ELIF
+    DIVEQUAL
+    CONSTANT
+    KEYS
+    NOTEQ
+    WHILE
+    FI
+    NEGCONSTANT
+    TC_INT
+    CHARVALUE
+    COMMENT
+    RPAREN
+    MODEQUAL
+    MULTEQUAL
+    GREATEREQ
+    COLON
+    CONCAT
+    STRIP
+    EQUALEQUAL
+    PLUSPLUS
+    RBRACK
+    ELSE
+    PLUSEQUAL
+    SPLIT
+    LPAREN
+    STRINGVALUE
+    MINUSMINUS
+    COPY
+    IF
+    AND
+    RETURN
+    INDENT
+    for
+    MINUSEQUAL
+    LESSEREQ
+    LBRACK
+    CHARING
+    NOT
+    TC_FLOAT
+    OR
+
+Grammar
+
+Rule 0     S' -> statementAug
+Rule 1     statementAug -> statementTop
+Rule 2     statementTop -> END
+Rule 3     statementTop -> statement
+Rule 4     statement -> declaration statementTop
+Rule 5     declaration -> identifierDeclaration
+Rule 6     identifierDeclaration -> dataType IDENTIFIER SEMICOLON
+Rule 7     dataType -> INT
+Rule 8     dataType -> BOOLEAN
+Rule 9     dataType -> CHAR
+Rule 10    dataType -> LONG
+Rule 11    dataType -> FLOAT
+Rule 12    dataType -> DOUBLE
+
+Terminals, with rules where they appear
+
+AND                  : 
+BOOLEAN              : 8
+CHAR                 : 9
+CHARING              : 
+CHARVALUE            : 
+COLON                : 
+COMMENT              : 
+CONCAT               : 
+CONSTANT             : 
+COPY                 : 
+DIVEQUAL             : 
+DO                   : 
+DOUBLE               : 12
+ELIF                 : 
+ELSE                 : 
+END                  : 2
+EQUALEQUAL           : 
+FI                   : 
+FLOAT                : 11
+GREATEREQ            : 
+IDENTIFIER           : 6
+IF                   : 
+INDENT               : 
+INT                  : 7
+KEYS                 : 
+LBRACK               : 
+LESSEREQ             : 
+LONG                 : 10
+LPAREN               : 
+MINUSEQUAL           : 
+MINUSMINUS           : 
+MODEQUAL             : 
+MULTEQUAL            : 
+NEGCONSTANT          : 
+NOT                  : 
+NOTEQ                : 
+OR                   : 
+PLUSEQUAL            : 
+PLUSPLUS             : 
+RBRACK               : 
+RETURN               : 
+RPAREN               : 
+SEMICOLON            : 6
+SPLIT                : 
+STRINGVALUE          : 
+STRIP                : 
+TC_FLOAT             : 
+TC_INT               : 
+WHILE                : 
+error                : 
+for                  : 
+
+Nonterminals, with rules where they appear
+
+dataType             : 6
+declaration          : 4
+identifierDeclaration : 5
+statement            : 3
+statementAug         : 0
+statementTop         : 1 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statementAug
+    (1) statementAug -> . statementTop
+    (2) statementTop -> . END
+    (3) statementTop -> . statement
+    (4) statement -> . declaration statementTop
+    (5) declaration -> . identifierDeclaration
+    (6) identifierDeclaration -> . dataType IDENTIFIER SEMICOLON
+    (7) dataType -> . INT
+    (8) dataType -> . BOOLEAN
+    (9) dataType -> . CHAR
+    (10) dataType -> . LONG
+    (11) dataType -> . FLOAT
+    (12) dataType -> . DOUBLE
+
+    END             shift and go to state 2
+    INT             shift and go to state 13
+    BOOLEAN         shift and go to state 10
+    CHAR            shift and go to state 7
+    LONG            shift and go to state 6
+    FLOAT           shift and go to state 5
+    DOUBLE          shift and go to state 4
+
+    statementTop                   shift and go to state 1
+    statementAug                   shift and go to state 3
+    dataType                       shift and go to state 8
+    identifierDeclaration          shift and go to state 9
+    statement                      shift and go to state 11
+    declaration                    shift and go to state 12
+
+state 1
+
+    (1) statementAug -> statementTop .
+
+    $end            reduce using rule 1 (statementAug -> statementTop .)
+
+
+state 2
+
+    (2) statementTop -> END .
+
+    $end            reduce using rule 2 (statementTop -> END .)
+
+
+state 3
+
+    (0) S' -> statementAug .
+
+
+
+state 4
+
+    (12) dataType -> DOUBLE .
+
+    IDENTIFIER      reduce using rule 12 (dataType -> DOUBLE .)
+
+
+state 5
+
+    (11) dataType -> FLOAT .
+
+    IDENTIFIER      reduce using rule 11 (dataType -> FLOAT .)
+
+
+state 6
+
+    (10) dataType -> LONG .
+
+    IDENTIFIER      reduce using rule 10 (dataType -> LONG .)
+
+
+state 7
+
+    (9) dataType -> CHAR .
+
+    IDENTIFIER      reduce using rule 9 (dataType -> CHAR .)
+
+
+state 8
+
+    (6) identifierDeclaration -> dataType . IDENTIFIER SEMICOLON
+
+    IDENTIFIER      shift and go to state 14
+
+
+state 9
+
+    (5) declaration -> identifierDeclaration .
+
+    END             reduce using rule 5 (declaration -> identifierDeclaration .)
+    INT             reduce using rule 5 (declaration -> identifierDeclaration .)
+    BOOLEAN         reduce using rule 5 (declaration -> identifierDeclaration .)
+    CHAR            reduce using rule 5 (declaration -> identifierDeclaration .)
+    LONG            reduce using rule 5 (declaration -> identifierDeclaration .)
+    FLOAT           reduce using rule 5 (declaration -> identifierDeclaration .)
+    DOUBLE          reduce using rule 5 (declaration -> identifierDeclaration .)
+
+
+state 10
+
+    (8) dataType -> BOOLEAN .
+
+    IDENTIFIER      reduce using rule 8 (dataType -> BOOLEAN .)
+
+
+state 11
+
+    (3) statementTop -> statement .
+
+    $end            reduce using rule 3 (statementTop -> statement .)
+
+
+state 12
+
+    (4) statement -> declaration . statementTop
+    (2) statementTop -> . END
+    (3) statementTop -> . statement
+    (4) statement -> . declaration statementTop
+    (5) declaration -> . identifierDeclaration
+    (6) identifierDeclaration -> . dataType IDENTIFIER SEMICOLON
+    (7) dataType -> . INT
+    (8) dataType -> . BOOLEAN
+    (9) dataType -> . CHAR
+    (10) dataType -> . LONG
+    (11) dataType -> . FLOAT
+    (12) dataType -> . DOUBLE
+
+    END             shift and go to state 2
+    INT             shift and go to state 13
+    BOOLEAN         shift and go to state 10
+    CHAR            shift and go to state 7
+    LONG            shift and go to state 6
+    FLOAT           shift and go to state 5
+    DOUBLE          shift and go to state 4
+
+    statementTop                   shift and go to state 15
+    dataType                       shift and go to state 8
+    identifierDeclaration          shift and go to state 9
+    statement                      shift and go to state 11
+    declaration                    shift and go to state 12
+
+state 13
+
+    (7) dataType -> INT .
+
+    IDENTIFIER      reduce using rule 7 (dataType -> INT .)
+
+
+state 14
+
+    (6) identifierDeclaration -> dataType IDENTIFIER . SEMICOLON
+
+    SEMICOLON       shift and go to state 16
+
+
+state 15
+
+    (4) statement -> declaration statementTop .
+
+    $end            reduce using rule 4 (statement -> declaration statementTop .)
+
+
+state 16
+
+    (6) identifierDeclaration -> dataType IDENTIFIER SEMICOLON .
+
+    END             reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    INT             reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    BOOLEAN         reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    CHAR            reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    LONG            reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    FLOAT           reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+    DOUBLE          reduce using rule 6 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
+
