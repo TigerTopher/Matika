@@ -93,6 +93,10 @@ t_MINUSMINUS = r'\-\-'
 
 ### CYAN ###
 
+t_ARROW = r'\-\>'
+t_LCURLY = r'\{'
+t_RCURLY = r'\}'
+t_QUOTE = r'\"'
 t_COMMA = r'\,'
 t_BAR = r'\|'
 t_EMPTY = r'\'\''
