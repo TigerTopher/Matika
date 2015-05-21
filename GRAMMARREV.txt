@@ -53,6 +53,9 @@ statement1 -> stringOpStatement
 statement1 -> read ( identifier ) ;
 statement1 -> print ( content ) ;
 
+booleanValue -> True
+booleanValue -> False
+
 content -> toPrint morePrint
 morePrint -> + toPrint morePrint
 morePrint -> ''
