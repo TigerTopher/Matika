@@ -1,4 +1,5 @@
 # Yacc example
+from random import randint
 
 import ply.yacc as yacc
 
@@ -295,17 +296,21 @@ def p_booleanValue(p):
                   | FALSE'''
 # Error rule for syntax errors
 def p_error(p):
+    x = ["\n\n\tAY NAKO Fudgee bar :( May syntax warnings!", "\n\n\tOMG! May syntax Warnings huhubells", "\n\n\tKalerki:( May syntax warnings!", "\n\n\tput**** may syntax warnings"]
+    print x[randint(0,3)]
+    #print "\n\nOO! Nako po! May syntax WARNINGS!"
     if p:
-      print "\nAy shemay!   May syntax error!"
-      print "[Pagkakamali] Ito'y matatagpuan bago ang TOKEN \" ", p.value, " \" "" sa linya numero: ", p.lineno, "and Lexical posisyon ", p.lexpos
+
+      print "[BABALA] Ito'y matatagpuan bago ang TOKEN \" ", p.value, " \" "" sa linya numero: ", p.lineno, "and Lexical posisyon ", p.lexpos
          #Syntax error of type: ", p.type, 
          # Just discard the token and tell the parser it's okay.
          #parser.errok()
-    print "ERROR"
+    else:
+      print "ERROR"
 
 # Build the parser
 parser = yacc.yacc()
-
+print "IS THERE A WARNING? :",
 
 while True:
   fp = open("source.txt", "r")

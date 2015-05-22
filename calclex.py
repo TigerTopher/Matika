@@ -47,31 +47,39 @@ reserved = {
   '(float)':'TC_FLOAT',
   'boolean':'BOOLEAN',
   'int':'INT',
-  'float':'FLOAT',
-  '.split':'SPLIT',
-  '.strip':'STRIP',
-  '.concat':'CONCAT',
-  '.insert':'INSERT',
-  '.pop':'POP',
-  '.copy':'COPY',
+#  'float':'FLOAT',
+#  '.split':'SPLIT',
+#  '.strip':'STRIP',
+#  '.concat':'CONCAT',
+#  '.insert':'INSERT',
+#  '.pop':'POP',
+#  '.copy':'COPY',
   'True':'TRUE',
   'False':'FALSE',
   'read':'READ',
-  'print':'PRINT',
+#  'print':'PRINT',
   'string':'STRING' 
 
 }
 
-tokens = ['LISTVALUE' , 'FLOATVALUE', 'EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
+tokens = ['PRINT', 'FLOAT', 'SPLIT', 'STRIP', 'CONCAT', 'INSERT', 'POP', 'COPY', 'LISTVALUE' , 'FLOATVALUE', 'EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
 
 # Regular expression rules for simple tokens
 
 
-literals = "+=*/|';\"!%.-:,><{}"
+literals = "+=*/|';\"!%-:,><{}"
 
 def t_LISTVALUE(t):
   r'(\[) ((\"(.+)\") | (\d)) (\, ((\"(.+)\") | (\d)) )* (\])'
   return t
+
+t_FLOAT = r'\.float'
+t_SPLIT = r'\.split'
+t_STRIP = r'\.strip'
+t_CONCAT = r'\.concat'
+t_INSERT = r'\.insert'
+t_POP = r'\.pop'
+t_COPY = r'\.copy'
 
 t_LESSTHAN = r'<'
 t_GREATERTHAN = r'>'
@@ -119,6 +127,11 @@ def t_COMMENT(t):
     pass
     # No return value. Token discarded
 
+def t_PRINT(t):
+    r'\print .*'
+    pass
+    # No return value. Token discarded
+
 def t_FLOATVALUE(t):
   r'[+-]?(\d+(\.\d*)|\.\d+)([eE][+-]?\d+)?'
   t.value = float(t.value)
@@ -138,17 +151,6 @@ def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'IDENTIFIER')    # Check for reserved words
     return t
-
-
-
-# A regular expression rule with some action code
-#def t_FLOAT(t):
-#  r'[+-]
-#  r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
-#  t.value = float(t.value)    
-#  return t
-
-
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -197,11 +199,15 @@ lexer.input(data)
 
 # Tokenize
 #x = 0
+
+fp = open("lexicalTokens.out", "w")
+fp.write("TYPE\tVALUE\tLINE NO\tLEX PO\n")
 for tok in lexer:
 #  x = x + 1
-  print tok
-  # print find_column(data, tok)
-
+  valueer = str( tok.type) + "\t" + str(tok.value) + "\t" + str(tok.lineno) + "\t" +  str(tok.lexpos) + "\n"
+  fp.write(valueer)
+# print find_column(data, tok)
+fp.close()
 # print "THERE ARE A TOTAL OF ", x, "TOKENS"
 # print find_column(data, tok)
 
