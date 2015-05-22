@@ -1,9 +1,47 @@
-| int x = < 3 + 4 > | ;
-if ( x == 2 ) : 
-	| x = < x + 1 > | ;
-	while ( x == 2 ) :
-		| x = < x + 1 > | ;
+#|int t = [100, 5]|;
+int adder ( int d , int x) : #This is a comment :)
+	| d += < 100 - 10 > | ;
 end
-end
-fi
+
+adder ( 5 );
+#|int x = t.pop(1)|;
+#|int y = t.pop(0)|;
+#|string t = []|;
+#t.insert(0,"HELLO");
+#|int z = 9|;
+#|int y = 9|;
+#|int a = <z * < y * 0 >>|;
+#|int w|;
+#|int b|;
+#if ( (z == 7) and (y == 7) ):
+#	|w = 8|;
+#	end
+#elif ( z == 8 )
+#	if (y == 8):
+#		|w = 50|;
+#	end
+#	else
+#		if (a == 0):
+#			|x = 7|;
+#		|w = 100|;
+#	end
+#else
+#	|w = 5000|;
+#	|b = <w / 500 * 10>|;
+#	end
+#|int c= <0 + 100> |;
+#|int x|;
+#for (|x = 0|; (x < 10); x ++)
+#	if (z == 9):
+#		do:
+#			|c += 1|;
+#		while (c < 1000);
+#		end
+#	fi
+#do:
+#	|c -= 1|;
+#while (c > 100);
+#t.pop(0);
+#|char TEMP|;
+#read (TEMP);
 end

@@ -134,8 +134,8 @@ def p_validListUnionValues(p):
     '''validListUnionValues : CONSTANT
                           | FLOATVALUE
                           | booleanValue
-                          | STRINGVALUE'''
-                        #  | listValue'''
+                          | STRINGVALUE
+                          | LISTVALUE'''
 
 def p_unionKeys(p):
     '''unionKeys : IDENTIFIER KEYS SEMICOLON'''
@@ -266,11 +266,13 @@ def p_FunctionDefinition(p):
 
 def p_Function(p):
     '''Function : IDENTIFIER LPAREN Parameter RPAREN'''
+    print p[1], p[2]
 
 def p_Parameter(p):
     ''' Parameter : dataType IDENTIFIER
                   | dataType IDENTIFIER COMMA Parameter
                   | EMPTY'''
+    print "IDENTIFIER: ", p[2]
 
 def p_FunctionCall(p):
     ''' FunctionCall : IDENTIFIER LPAREN FunctionCallParameter RPAREN SEMICOLON'''
@@ -279,11 +281,12 @@ def p_FunctionCallParameter(p):
     '''FunctionCallParameter : IDENTIFIER
                             | IDENTIFIER COMMA FunctionCallParameter
                             | EMPTY'''
-
+    print "IDENTIFIER: ", p[1]
 def p_returnDec(p):
     '''returnDec : RETURN CONSTANT SEMICOLON
                 | RETURN IDENTIFIER SEMICOLON
-                | RETURN expression SEMICOLON'''
+                | RETURN expression SEMICOLON
+                | RETURN SEMICOLON'''
 
 def p_booleanValue(p):
   '''booleanValue : TRUE
