@@ -72,10 +72,10 @@ def p_declaration(p):
                   | unionDec'''
 
 def p_identifierDeclaration(p):
-    '''identifierDeclaration : dataType IDENTIFIER SEMICOLON
-                            | dataType IDENTIFIER LBRACK CONSTANT RBRACK SEMICOLON
-                            | dataType IDENTIFIER LBRACK CONSTANT RBRACK EQUAL expression SEMICOLON
-                            | dataType IDENTIFIER EQUAL expression SEMICOLON'''
+    '''identifierDeclaration : BAR dataType IDENTIFIER BAR SEMICOLON
+                            | BAR dataType IDENTIFIER LBRACK CONSTANT RBRACK BAR SEMICOLON
+                            | BAR dataType IDENTIFIER LBRACK CONSTANT RBRACK EQUAL expression BAR SEMICOLON
+                            | BAR dataType IDENTIFIER EQUAL expression BAR SEMICOLON'''
 
 def p_dataType(p):
   '''dataType : INT
@@ -132,10 +132,10 @@ def p_unionAdd(p):
 
 def p_validListUnionValues(p):
     '''validListUnionValues : CONSTANT
-                          | floatValue
+                          | FLOATVALUE
                           | booleanValue
-                          | STRINGVALUE
-                          | listValue'''
+                          | STRINGVALUE'''
+                        #  | listValue'''
 
 def p_unionKeys(p):
     '''unionKeys : IDENTIFIER KEYS SEMICOLON'''
@@ -156,7 +156,7 @@ def p_Body(p):
     '''Body : statementMore'''
 
 def p_statementMore(p):
-    '''statementMore : INDENT statementMoreCont
+    '''statementMore : statementMoreCont
                     | END'''
 
 def p_statementMoreCont(p):
@@ -301,10 +301,14 @@ parser = yacc.yacc()
 
 
 while True:
+  fp = open("source.txt", "r")
   try:
-    s = raw_input('calc > ')
+    s = fp.read()
+    #s = raw_input('calc > ')
+    
   except EOFError:
     break
   if not s: continue
   result = parser.parse(s, tracking=True)
   print(result)
+  raw_input()

@@ -62,7 +62,7 @@ reserved = {
 
 }
 
-tokens = ['FLOATVALUE', 'EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
+tokens = ['FLOATVALUE', 'EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
 
 # Regular expression rules for simple tokens
 
@@ -82,8 +82,8 @@ t_COLON = r'\:'
 t_SEMICOLON = r'\;'
 t_LBRACK = r'\['
 t_RBRACK = r'\]'
-t_INDENT  = r'\t'
-t_EQUALEQUAL  = r'=='
+#t_INDENT  = r'\t'
+t_EQUALEQUAL  = r'\=\='
 t_NOTEQ = r'!='
 
 t_PLUSEQUAL = r'\+='
@@ -152,7 +152,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 # A string containing ignored characters (spaces ) nottabs)
-t_ignore  = ' '                 # ' \t'
+t_ignore  = ' \t'                 # ' \t'
 
 # Error handling rule
 def t_error(t):
@@ -175,7 +175,7 @@ lexer = lex.lex()     # lex(debug = 1)
 
 
 # For the data...
-fp = open("file.txt", "r")
+fp = open("source.txt", "r")
 data = fp.read()
 
 fp.close()
@@ -192,7 +192,7 @@ data = '''
 lexer.input(data)
 
 # Tokenize
-x = 0
+#x = 0
 for tok in lexer:
 #  x = x + 1
   print tok
