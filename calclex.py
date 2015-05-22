@@ -24,7 +24,7 @@ tokens = (
    'NEGCON',
    'LPAREN',
    'RPAREN',
-   'IDENTIFIER'
+   'IDENTIFIER' 
 )
 """
 
@@ -45,15 +45,14 @@ reserved = {
   '.keys()':'KEYS',
   '(int)':'TC_INT', 
   '(float)':'TC_FLOAT',
-  'char':'CHAR',
   'boolean':'BOOLEAN',
   'int':'INT',
-  'long':'LONG',
   'float':'FLOAT',
-  'double':'DOUBLE',
   '.split':'SPLIT',
   '.strip':'STRIP',
   '.concat':'CONCAT',
+  '.insert':'INSERT',
+  '.pop':'POP',
   '.copy':'COPY',
   'True':'TRUE',
   'False':'FALSE',
@@ -63,7 +62,7 @@ reserved = {
 
 }
 
-tokens = ['EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'CHARVALUE', 'CHARING', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT','NEGCONSTANT', 'IDENTIFIER']+ list(reserved.values())
+tokens = ['EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
 
 # Regular expression rules for simple tokens
 
@@ -111,16 +110,6 @@ t_EQUAL = r'\='
 t_GREATEREQ = r'>='
 t_LESSEREQ = r'<='
 
-def t_CHARVALUE(t):
-  r'\'.\''
-  t.value = t.value[1]
-  return t
-
-def t_CHARING(t):
-  r'\'.+\''
-  t.value = (t.value.lstrip("\'".rstrip("\'")))
-  return t
-
 def t_COMMENT(t):
     r'\#.*'
     pass
@@ -136,17 +125,10 @@ def t_IDENTIFIER(t):
     t.type = reserved.get(t.value,'IDENTIFIER')    # Check for reserved words
     return t
 
-def t_NEGCONSTANT(t):
-  r'[-][1-9][0-9]*'
-  t.type = 'CONSTANT'
-  t.value = int(t.value)
-  return t
-
 def t_CONSTANT(t):
-    r'\d+'
-    r'[-][0-9]*'
-    t.value = int(t.value)    
-    return t
+  r'[-]*[0-9][0-9]*'
+  t.value = int(t.value)    
+  return t
 
 
 # A regular expression rule with some action code

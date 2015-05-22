@@ -30,6 +30,7 @@ def p_statement(p):
                 | FunctionCall statementTop
                 | returnDec statementTop
                 | stringOpStatement statementTop
+                | listOpStatement statementTop
                 | READ LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
                 | PRINT LPAREN content RPAREN SEMICOLON statementTop'''              
 
@@ -49,6 +50,7 @@ def p_statement1(p):
                 | FunctionCall
                 | returnDec
                 | stringOpStatement
+                | listOpStatement statementTop
                 | READ LPAREN IDENTIFIER RPAREN SEMICOLON
                 | PRINT LPAREN content RPAREN SEMICOLON'''
 
@@ -78,15 +80,21 @@ def p_identifierDeclaration(p):
 def p_dataType(p):
   '''dataType : INT
             | BOOLEAN
-            | CHAR
-            | LONG
-            | FLOAT
-            | DOUBLE'''
+            | FLOAT'''
   print p[1]
 
 def p_stringOPStatement(p):
-    '''stringOpStatement : IDENTIFIER stringOP LPAREN string RPAREN SEMICOLON
+    '''stringOpStatement : IDENTIFIER stringOp LPAREN STRING RPAREN SEMICOLON
                         | IDENTIFIER stringOp LPAREN IDENTIFIER RPAREN SEMICOLON'''
+
+
+def p_listOPStatement(p):
+    '''listOpStatement : IDENTIFIER INSERT LPAREN CONSTANT COMMA validListUnionValues RPAREN SEMICOLON
+                        | IDENTIFIER POP LPAREN listOpChoice RPAREN SEMICOLON'''
+
+def p_listOpChoice(p):
+    '''listOpChoice : CONSTANT
+                    | EMPTY'''
 
 def p_stringOp(p):
     '''stringOp : SPLIT
@@ -115,8 +123,8 @@ def p_union(p):
     '''union : LCURLY unionElement RCURLY'''
 
 def p_unionElement(p):
-    '''unionElement : string EQUAL validListUnionValues
-                  | string EQUAL validListUnionValues COMMA unionElement
+    '''unionElement : STRING EQUAL validListUnionValues
+                  | STRING EQUAL validListUnionValues COMMA unionElement
                   | EMPTY'''
 
 def p_unionAdd(p):
@@ -124,10 +132,7 @@ def p_unionAdd(p):
 
 def p_validListUnionValues(p):
     '''validListUnionValues : CONSTANT
-                          | longValue
                           | floatValue
-                          | doubleValue
-                          | CHARVALUE
                           | booleanValue
                           | STRINGVALUE
                           | listValue'''
@@ -136,7 +141,7 @@ def p_unionKeys(p):
     '''unionKeys : IDENTIFIER KEYS SEMICOLON'''
 
 def p_unionEval(p):
-    '''unionEval : IDENTIFIER ARROW string'''
+    '''unionEval : IDENTIFIER ARROW STRING'''
 
 def p_typeCastToInt(p):
     '''typeCastToInt : TC_INT IDENTIFIER SEMICOLON'''
@@ -151,7 +156,7 @@ def p_Body(p):
     '''Body : statementMore'''
 
 def p_statementMore(p):
-    '''statementMore : indent statementMoreCont
+    '''statementMore : INDENT statementMoreCont
                     | END'''
 
 def p_statementMoreCont(p):
@@ -272,7 +277,7 @@ def p_FunctionCall(p):
 
 def p_FunctionCallParameter(p):
     '''FunctionCallParameter : IDENTIFIER
-                            | IDENTIFIER COMMA p_FunctionCallParameter
+                            | IDENTIFIER COMMA FunctionCallParameter
                             | EMPTY'''
 
 def p_returnDec(p):

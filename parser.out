@@ -2,12 +2,8 @@ Created by PLY version 3.6 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    NEGCONSTANT
     COMMENT
     QUOTE
-    STRING
-    INDENT
-    CHARING
 
 Grammar
 
@@ -29,77 +25,77 @@ Rule 14    statement -> FunctionDefinition statementTop
 Rule 15    statement -> FunctionCall statementTop
 Rule 16    statement -> returnDec statementTop
 Rule 17    statement -> stringOpStatement statementTop
-Rule 18    statement -> READ LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
-Rule 19    statement -> PRINT LPAREN content RPAREN SEMICOLON statementTop
-Rule 20    statement1 -> declaration
-Rule 21    statement1 -> expression
-Rule 22    statement1 -> IfThenElse
-Rule 23    statement1 -> AssignmentHead
-Rule 24    statement1 -> WhileLoop
-Rule 25    statement1 -> ForLoop
-Rule 26    statement1 -> DoWhileLoop
-Rule 27    statement1 -> unionAdd
-Rule 28    statement1 -> unionKeys
-Rule 29    statement1 -> typeCastToInt
-Rule 30    statement1 -> typecastToFloat
-Rule 31    statement1 -> FunctionDefinition
-Rule 32    statement1 -> FunctionCall
-Rule 33    statement1 -> returnDec
-Rule 34    statement1 -> stringOpStatement
-Rule 35    statement1 -> READ LPAREN IDENTIFIER RPAREN SEMICOLON
-Rule 36    statement1 -> PRINT LPAREN content RPAREN SEMICOLON
-Rule 37    content -> toPrint morePrint
-Rule 38    morePrint -> PLUS toPrint morePrint
-Rule 39    morePrint -> EMPTY
-Rule 40    toPrint -> STRINGVALUE
-Rule 41    toPrint -> CONSTANT
-Rule 42    toPrint -> IDENTIFIER
-Rule 43    declaration -> identifierDeclaration
-Rule 44    declaration -> listDec
-Rule 45    declaration -> unionDec
-Rule 46    identifierDeclaration -> dataType IDENTIFIER SEMICOLON
-Rule 47    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK SEMICOLON
-Rule 48    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK EQUAL expression SEMICOLON
-Rule 49    identifierDeclaration -> dataType IDENTIFIER EQUAL expression SEMICOLON
-Rule 50    dataType -> INT
-Rule 51    dataType -> BOOLEAN
-Rule 52    dataType -> CHAR
-Rule 53    dataType -> LONG
+Rule 18    statement -> listOpStatement statementTop
+Rule 19    statement -> READ LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
+Rule 20    statement -> PRINT LPAREN content RPAREN SEMICOLON statementTop
+Rule 21    statement1 -> declaration
+Rule 22    statement1 -> expression
+Rule 23    statement1 -> IfThenElse
+Rule 24    statement1 -> AssignmentHead
+Rule 25    statement1 -> WhileLoop
+Rule 26    statement1 -> ForLoop
+Rule 27    statement1 -> DoWhileLoop
+Rule 28    statement1 -> unionAdd
+Rule 29    statement1 -> unionKeys
+Rule 30    statement1 -> typeCastToInt
+Rule 31    statement1 -> typecastToFloat
+Rule 32    statement1 -> FunctionDefinition
+Rule 33    statement1 -> FunctionCall
+Rule 34    statement1 -> returnDec
+Rule 35    statement1 -> stringOpStatement
+Rule 36    statement1 -> listOpStatement statementTop
+Rule 37    statement1 -> READ LPAREN IDENTIFIER RPAREN SEMICOLON
+Rule 38    statement1 -> PRINT LPAREN content RPAREN SEMICOLON
+Rule 39    content -> toPrint morePrint
+Rule 40    morePrint -> PLUS toPrint morePrint
+Rule 41    morePrint -> EMPTY
+Rule 42    toPrint -> STRINGVALUE
+Rule 43    toPrint -> CONSTANT
+Rule 44    toPrint -> IDENTIFIER
+Rule 45    declaration -> identifierDeclaration
+Rule 46    declaration -> listDec
+Rule 47    declaration -> unionDec
+Rule 48    identifierDeclaration -> dataType IDENTIFIER SEMICOLON
+Rule 49    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK SEMICOLON
+Rule 50    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK EQUAL expression SEMICOLON
+Rule 51    identifierDeclaration -> dataType IDENTIFIER EQUAL expression SEMICOLON
+Rule 52    dataType -> INT
+Rule 53    dataType -> BOOLEAN
 Rule 54    dataType -> FLOAT
-Rule 55    dataType -> DOUBLE
-Rule 56    stringOpStatement -> IDENTIFIER stringOP LPAREN string RPAREN SEMICOLON
-Rule 57    stringOpStatement -> IDENTIFIER stringOp LPAREN IDENTIFIER RPAREN SEMICOLON
-Rule 58    stringOp -> SPLIT
-Rule 59    stringOp -> STRIP
-Rule 60    stringOp -> CONCAT
-Rule 61    stringOp -> COPY
-Rule 62    listDec -> IDENTIFIER EQUAL list SEMICOLON
-Rule 63    list -> LBRACK listElem RBRACK
-Rule 64    listElem -> validListUnionValues
-Rule 65    listElem -> validListUnionValues COMMA listElem
-Rule 66    listElem -> EMPTY
-Rule 67    listEval -> IDENTIFIER LBRACK CONSTANT RBRACK
-Rule 68    unionDec -> IDENTIFIER EQUAL union SEMICOLON
-Rule 69    union -> LCURLY unionElement RCURLY
-Rule 70    unionElement -> string EQUAL validListUnionValues
-Rule 71    unionElement -> string EQUAL validListUnionValues COMMA unionElement
-Rule 72    unionElement -> EMPTY
-Rule 73    unionAdd -> IDENTIFIER LBRACK STRINGVALUE RBRACK EQUAL validListUnionValues SEMICOLON
-Rule 74    validListUnionValues -> CONSTANT
-Rule 75    validListUnionValues -> longValue
-Rule 76    validListUnionValues -> floatValue
-Rule 77    validListUnionValues -> doubleValue
-Rule 78    validListUnionValues -> CHARVALUE
+Rule 55    stringOpStatement -> IDENTIFIER stringOp LPAREN STRING RPAREN SEMICOLON
+Rule 56    stringOpStatement -> IDENTIFIER stringOp LPAREN IDENTIFIER RPAREN SEMICOLON
+Rule 57    listOpStatement -> IDENTIFIER INSERT LPAREN CONSTANT COMMA validListUnionValues RPAREN SEMICOLON
+Rule 58    listOpStatement -> IDENTIFIER POP LPAREN listOpChoice RPAREN SEMICOLON
+Rule 59    listOpChoice -> CONSTANT
+Rule 60    listOpChoice -> EMPTY
+Rule 61    stringOp -> SPLIT
+Rule 62    stringOp -> STRIP
+Rule 63    stringOp -> CONCAT
+Rule 64    stringOp -> COPY
+Rule 65    listDec -> IDENTIFIER EQUAL list SEMICOLON
+Rule 66    list -> LBRACK listElem RBRACK
+Rule 67    listElem -> validListUnionValues
+Rule 68    listElem -> validListUnionValues COMMA listElem
+Rule 69    listElem -> EMPTY
+Rule 70    listEval -> IDENTIFIER LBRACK CONSTANT RBRACK
+Rule 71    unionDec -> IDENTIFIER EQUAL union SEMICOLON
+Rule 72    union -> LCURLY unionElement RCURLY
+Rule 73    unionElement -> STRING EQUAL validListUnionValues
+Rule 74    unionElement -> STRING EQUAL validListUnionValues COMMA unionElement
+Rule 75    unionElement -> EMPTY
+Rule 76    unionAdd -> IDENTIFIER LBRACK STRINGVALUE RBRACK EQUAL validListUnionValues SEMICOLON
+Rule 77    validListUnionValues -> CONSTANT
+Rule 78    validListUnionValues -> floatValue
 Rule 79    validListUnionValues -> booleanValue
 Rule 80    validListUnionValues -> STRINGVALUE
 Rule 81    validListUnionValues -> listValue
 Rule 82    unionKeys -> IDENTIFIER KEYS SEMICOLON
-Rule 83    unionEval -> IDENTIFIER ARROW string
+Rule 83    unionEval -> IDENTIFIER ARROW STRING
 Rule 84    typeCastToInt -> TC_INT IDENTIFIER SEMICOLON
 Rule 85    typecastToFloat -> TC_FLOAT IDENTIFIER SEMICOLON
 Rule 86    WhileLoop -> WHILE Condition COLON Body
 Rule 87    Body -> statementMore
-Rule 88    statementMore -> indent statementMoreCont
+Rule 88    statementMore -> INDENT statementMoreCont
 Rule 89    statementMore -> END
 Rule 90    statementMoreCont -> statement1 statementMore
 Rule 91    ForLoop -> for LPAREN AssignmentHead Condition Increment RPAREN Body
@@ -164,7 +160,7 @@ Rule 149   Parameter -> dataType IDENTIFIER COMMA Parameter
 Rule 150   Parameter -> EMPTY
 Rule 151   FunctionCall -> IDENTIFIER LPAREN FunctionCallParameter RPAREN SEMICOLON
 Rule 152   FunctionCallParameter -> IDENTIFIER
-Rule 153   FunctionCallParameter -> IDENTIFIER COMMA p_FunctionCallParameter
+Rule 153   FunctionCallParameter -> IDENTIFIER COMMA FunctionCallParameter
 Rule 154   FunctionCallParameter -> EMPTY
 Rule 155   returnDec -> RETURN CONSTANT SEMICOLON
 Rule 156   returnDec -> RETURN IDENTIFIER SEMICOLON
@@ -177,42 +173,38 @@ Terminals, with rules where they appear
 AND                  : 108
 ARROW                : 83
 BAR                  : 113 113
-BOOLEAN              : 51
-CHAR                 : 52
-CHARING              : 
-CHARVALUE            : 78
+BOOLEAN              : 53
 COLON                : 86 92 96 99 101 146
-COMMA                : 65 71 149 153
+COMMA                : 57 68 74 149 153
 COMMENT              : 
-CONCAT               : 60
-CONSTANT             : 41 47 48 67 74 106 116 155
-COPY                 : 61
+CONCAT               : 63
+CONSTANT             : 43 49 50 57 59 70 77 106 116 155
+COPY                 : 64
 DIV                  : 137
 DIVEQUAL             : 125
 DO                   : 92
-DOUBLE               : 55
 ELIF                 : 101
 ELSE                 : 99
-EMPTY                : 39 66 72 112 150 154
+EMPTY                : 41 60 69 75 112 150 154
 END                  : 1 89
-EQUAL                : 48 49 62 68 70 71 73 114 140
+EQUAL                : 50 51 65 71 73 74 76 114 140
 EQUALEQUAL           : 139
 FALSE                : 159
 FI                   : 98
 FLOAT                : 54
 GREATEREQ            : 143
 GREATERTHAN          : 133 142
-IDENTIFIER           : 18 35 42 46 47 48 49 56 57 57 62 67 68 73 82 83 84 85 105 113 147 148 149 151 152 153 156
+IDENTIFIER           : 19 37 44 48 49 50 51 55 56 56 57 58 65 70 71 76 82 83 84 85 105 113 147 148 149 151 152 153 156
 IF                   : 96
-INDENT               : 
-INT                  : 50
+INDENT               : 88
+INSERT               : 57
+INT                  : 52
 KEYS                 : 82
-LBRACK               : 47 48 63 67 73
-LCURLY               : 69
+LBRACK               : 49 50 66 70 76
+LCURLY               : 72
 LESSEREQ             : 144
 LESSTHAN             : 133 141
-LONG                 : 53
-LPAREN               : 18 19 35 36 56 57 91 103 104 132 147 151
+LPAREN               : 19 20 37 38 55 56 57 58 91 103 104 132 147 151
 MINUS                : 135
 MINUSEQUAL           : 123
 MINUSMINUS           : 111
@@ -220,25 +212,25 @@ MOD                  : 138
 MODEQUAL             : 126
 MULT                 : 136
 MULTEQUAL            : 124
-NEGCONSTANT          : 
 NOT                  : 104
 NOTEQ                : 145
 OR                   : 109
-PLUS                 : 38 134
+PLUS                 : 40 134
 PLUSEQUAL            : 122
 PLUSPLUS             : 110
-PRINT                : 19 36
+POP                  : 58
+PRINT                : 20 38
 QUOTE                : 
-RBRACK               : 47 48 63 67 73
-RCURLY               : 69
-READ                 : 18 35
+RBRACK               : 49 50 66 70 76
+RCURLY               : 72
+READ                 : 19 37
 RETURN               : 155 156 157
-RPAREN               : 18 19 35 36 56 57 91 103 104 132 147 151
-SEMICOLON            : 18 19 35 36 46 47 48 49 56 57 62 68 73 82 84 85 92 93 113 151 155 156 157
-SPLIT                : 58
-STRING               : 
-STRINGVALUE          : 40 73 80
-STRIP                : 59
+RPAREN               : 19 20 37 38 55 56 57 58 91 103 104 132 147 151
+SEMICOLON            : 19 20 37 38 48 49 50 51 55 56 57 58 65 71 76 82 84 85 92 93 113 151 155 156 157
+SPLIT                : 61
+STRING               : 55 73 74 83
+STRINGVALUE          : 42 76 80
+STRIP                : 62
 TC_FLOAT             : 85
 TC_INT               : 84
 TRUE                 : 158
@@ -250,7 +242,7 @@ Nonterminals, with rules where they appear
 
 ArithmeticExpression : 117 127
 ArithmeticOperator   : 133
-AssignmentHead       : 6 23 91
+AssignmentHead       : 6 24 91
 AssignmentOperator   : 95 115
 AssignmentOption     : 113
 AssignmentOptionChain : 114
@@ -258,13 +250,13 @@ AssignmentOptions2   : 115 121
 Body                 : 86 91 92 96 99 101 146
 Compound             : 103
 Condition            : 86 91 92 96 101 103 103 104
-DoWhileLoop          : 9 26
-ForLoop              : 8 25
+DoWhileLoop          : 9 27
+ForLoop              : 8 26
 Function             : 119 146
-FunctionCall         : 15 32
-FunctionCallParameter : 151
-FunctionDefinition   : 14 31
-IfThenElse           : 5 22
+FunctionCall         : 15 33
+FunctionCallParameter : 151 153
+FunctionDefinition   : 14 32
+IfThenElse           : 5 23
 Increment            : 91
 Iterator             : 94
 Operand              : 93 95 132 132 133 133
@@ -272,45 +264,41 @@ Options              : 93
 Parameter            : 147 149
 RelationExpression   : 102 131
 RelationOperator     : 132
-WhileLoop            : 7 24
+WhileLoop            : 7 25
 addElif              : 96 100
 addElif2             : 97
 booleanValue         : 79 107
-content              : 19 36
-dataType             : 46 47 48 49 146 148 149
-declaration          : 3 20
-doubleValue          : 77
+content              : 20 38
+dataType             : 48 49 50 51 146 148 149
+declaration          : 3 21
 elifClause           : 100
-expression           : 4 21 48 49 157
-floatValue           : 76
-identifierDeclaration : 43
-indent               : 88
-list                 : 62 129
-listDec              : 44
-listElem             : 63 65
+expression           : 4 22 50 51 157
+floatValue           : 78
+identifierDeclaration : 45
+list                 : 65 129
+listDec              : 46
+listElem             : 66 68
 listEval             : 118 128
+listOpChoice         : 58
+listOpStatement      : 18 36
 listValue            : 81
-longValue            : 75
-morePrint            : 37 38
-p_FunctionCallParameter : 153
-returnDec            : 16 33
+morePrint            : 39 40
+returnDec            : 16 34
 statement            : 2
 statement1           : 90
 statementMore        : 87 90
 statementMoreCont    : 88
-statementTop         : 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 0
-string               : 56 70 71 83
-stringOP             : 56
-stringOp             : 57
-stringOpStatement    : 17 34
-toPrint              : 37 38
-typeCastToInt        : 12 29
-typecastToFloat      : 13 30
-union                : 68 130
-unionAdd             : 10 27
-unionDec             : 45
-unionElement         : 69 71
+statementTop         : 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 36 0
+stringOp             : 55 56
+stringOpStatement    : 17 35
+toPrint              : 39 40
+typeCastToInt        : 12 30
+typecastToFloat      : 13 31
+union                : 71 130
+unionAdd             : 10 28
+unionDec             : 47
+unionElement         : 72 74
 unionEval            : 120
-unionKeys            : 11 28
-validListUnionValues : 64 65 70 71 73
+unionKeys            : 11 29
+validListUnionValues : 57 67 68 73 74 76
 
