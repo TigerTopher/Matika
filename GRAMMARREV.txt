@@ -1,10 +1,10 @@
 GRAMMAR: 
-	statementAug -> statementTop
+statementAug -> statementTop
 
-	statementTop -> statement
-	statementTop -> end
+statementTop -> statement
+statementTop -> end
 
-	statement -> declaration statementTop
+statement -> declaration statementTop
 	
 statement -> expression statementTop
 statement -> IfThenElse statementTop
@@ -25,6 +25,7 @@ statement -> FunctionCall statementTop
 
 statement -> returnDec statementTop
 statement -> stringOpStatement statementTop
+statement -> listOpStatement statementTop
 
 statement -> read ( identifier ) ; statementTop
 statement -> print ( content ) ; statementTop
@@ -49,6 +50,8 @@ statement1 -> FunctionCall
 
 statement1 -> returnDec
 statement1 -> stringOpStatement
+statement1 -> listOpStatement
+
 
 statement1 -> read ( identifier ) ;
 statement1 -> print ( content ) ;
@@ -63,21 +66,20 @@ toPrint -> " string "
 toPrint -> number
 toPrint -> identifier
 
-	declaration -> identifierDeclaration
+declaration -> identifierDeclaration
 declaration -> listDec
 declaration -> unionDec
 
-	identifierDeclaration -> dataType identifier ;
-identifierDeclaration -> dataType identifier [ constant ] ;
-identifierDeclaration -> dataType identifier [ constant ] = expression ;
-identifierDeclaration -> dataType identifier = expression ;
+identifierDeclaration -> | dataType identifier | ;
+identifierDeclaration -> | dataType identifier [ constant ] | ;
+identifierDeclaration -> | dataType identifier [ constant ] = expression | ;
+identifierDeclaration -> | dataType identifier = expression | ;
 
-	dataType -> boolean
-	dataType -> char
-	dataType -> int
-	dataType -> long
-	dataType -> float
-	dataType -> double
+dataType -> boolean
+dataType -> int
+dataType -> long
+dataType -> float
+dataType -> double
 
 stringOpStatement -> identifier stringOp ( string ) ;
 stringOpStatement -> identifier stringOp ( identifier ) ;
@@ -87,14 +89,20 @@ stringOp -> .strip
 stringOp -> .concat
 stringOp -> .copy
 
-listDec -> identifier = list ;
+listOpStatement -> identifier .insert ( constant , validListUnionValues ) ;
+listOpStatement -> identifier .pop ( listOpChoice ) ;
+
+listOpChoice -> constant
+listOpChoice -> ''
+
+listDec -> | identifier = list | ;
 list -> [ listElem ]
 listElem -> validListUnionValues
 listElem -> validListUnionValues , listElem
 listElem -> '' 
 listEval -> identifier [ constant ]
 
-unionDec -> identifier = union ;
+unionDec -> | identifier = union | ;
 union -> { unionElement }
 unionElement -> string = validListUnionValues
 unionElement -> string = validListUnionValues , unionElement
@@ -105,7 +113,6 @@ validListUnionValues -> intValue
 validListUnionValues -> longValue
 validListUnionValues -> floatValue
 validListUnionValues -> doubleValue
-validListUnionValues -> charValue
 validListUnionValues -> booleanValue
 validListUnionValues -> stringValue
 validListUnionValues -> listValue

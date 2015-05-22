@@ -56,7 +56,11 @@ reserved = {
   '.concat':'CONCAT',
   '.copy':'COPY',
   'True':'TRUE',
-  'False':'FALSE'
+  'False':'FALSE',
+  'read':'READ',
+  'print':'PRINT',
+  'string':'STRING' 
+
 }
 
 tokens = ['EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'CHARVALUE', 'CHARING', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT','NEGCONSTANT', 'IDENTIFIER']+ list(reserved.values())

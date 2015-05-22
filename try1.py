@@ -5,8 +5,8 @@ import ply.yacc as yacc
 # Get the token map from the lexer.  This is required.
 from calclex import tokens
 
-def p_statementAug(p):
-  'statementAug : statementTop'
+#def p_statementAug(p):
+#  'statementAug : statementTop'
 
 def p_statementTop(p):
   '''statementTop : END
@@ -30,8 +30,8 @@ def p_statement(p):
                 | FunctionCall statementTop
                 | returnDec statementTop
                 | stringOpStatement statementTop
-                | read LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
-                | print LPAREN content RPAREN SEMICOLON statementTop'''              
+                | READ LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
+                | PRINT LPAREN content RPAREN SEMICOLON statementTop'''              
 
 def p_statement1(p):
     '''statement1 : declaration
@@ -49,12 +49,8 @@ def p_statement1(p):
                 | FunctionCall
                 | returnDec
                 | stringOpStatement
-                | read LPAREN IDENTIFIER RPAREN SEMICOLON
-                | print LPAREN content RPAREN SEMICOLON'''
-
-def p_booleanValue(p):
-    '''booleanValue : TRUE
-                    | FALSE'''
+                | READ LPAREN IDENTIFIER RPAREN SEMICOLON
+                | PRINT LPAREN content RPAREN SEMICOLON'''
 
 def p_content(p):
     '''content : toPrint morePrint'''
@@ -64,8 +60,8 @@ def p_morePrint(p):
                 | EMPTY'''
 
 def p_toPrint(p):
-    '''toPrint : QUOTE string QUOTE
-              | number
+    '''toPrint : STRINGVALUE
+              | CONSTANT
               | IDENTIFIER'''
 
 def p_declaration(p):
@@ -124,10 +120,10 @@ def p_unionElement(p):
                   | EMPTY'''
 
 def p_unionAdd(p):
-    '''unionAdd : IDENTIFIER LBRACK string RBRACK EQUAL validListUnionValues SEMICOLON'''
+    '''unionAdd : IDENTIFIER LBRACK STRINGVALUE RBRACK EQUAL validListUnionValues SEMICOLON'''
 
 def p_validListUnionValues(p):
-    '''validListUnionValues : intValue
+    '''validListUnionValues : CONSTANT
                           | longValue
                           | floatValue
                           | doubleValue
@@ -215,11 +211,11 @@ def p_AssignmentOption(p):
                       | AssignmentOperator AssignmentOptions2'''
 
 def p_AssignmentOptions2(p):
-    '''AssingmentOptions2 : CONSTANT
+    '''AssignmentOptions2 : CONSTANT
                         | ArithmeticExpression'''
 
 def p_AssignmentOptionChain(p):
-    '''AssignmentOptionsChain : listEval
+    '''AssignmentOptionChain : listEval
                               | Function
                               | unionEval
                               | AssignmentOptions2'''
@@ -261,7 +257,7 @@ def p_RelationOperator(p):
                         | NOTEQ'''
 
 def p_FunctionDefinition(p):
-    '''p_FunctionDefinition : dataType Function COLON Body'''
+    '''FunctionDefinition : dataType Function COLON Body'''
 
 def p_Function(p):
     '''Function : IDENTIFIER LPAREN Parameter RPAREN'''
@@ -284,88 +280,9 @@ def p_returnDec(p):
                 | RETURN IDENTIFIER SEMICOLON
                 | RETURN expression SEMICOLON'''
 
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-def p_expression(p):
-  '''expression : ArithmeticExpression
-                | RelationExpression'''
-#                 | listEval
-#                 | list
-#                 | union
-#                 | RelationExpression'''
-
 def p_booleanValue(p):
-  '''booleanValue : TRUE 
+  '''booleanValue : TRUE
                   | FALSE'''
-
-def p_Iterator(p):
-  '''Iterator : PLUSPLUS
-              | MINUSMINUS
-              | '''
-
-def p_ArithmeticExpression(p):
-  'ArithmeticExpression : LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN'
-
-def p_RelationExpression(p):
-  '''RelationExpression : LPAREN Operand ArithmeticOperator Operand RPAREN '''
-
-def p_Compound(p):
-  '''Compound : AND
-              | OR '''
-
-def p_Operand(p):
-  '''Operand : IDENTIFIER
-             | CONSTANT
-             | booleanValue'''
-
-def p_ArithmeticOperator(p):
-  '''ArithmeticOperator : PLUS
-                        | MINUS
-                        | MULT
-                        | DIV
-                        | MOD'''
-
-#def p_list(p):
-#    '''listEval : LBRACK listElem RBRACK '''
-
-#def p_listElem(p):
-#  '''listElem : validListUnionValues
-#              | validListUnionValues , listElem
-#              | None '''
-
-
-#def p_listEval(p):
-#  '''listEval : IDENTIFIER LBRACK CONSTANT RBRACK '''
-
-#def p_listDec(p):
-#  '''listDec : IDENTIFIER = list SEMICOLON'''
-
-def p_declaration(p):
-    '''declaration : identifierDeclaration'''
-
-def p_identifierDeclaration(p): 
-  'identifierDeclaration : dataType IDENTIFIER SEMICOLON'
-  print p[2]
-
-#def p_union(p):
-#  '''union : { unionElement }'''
-
-
-  
-def p_dataType(p):
-  '''dataType : INT
-            | BOOLEAN
-            | CHAR
-            | LONG
-            | FLOAT
-            | DOUBLE'''
-  print p[1]
-
-
-
-
-
 # Error rule for syntax errors
 def p_error(p):
     if p:

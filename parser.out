@@ -2,691 +2,315 @@ Created by PLY version 3.6 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    DO
-    ELIF
-    DIVEQUAL
-    KEYS
-    NOTEQ
-    FI
     NEGCONSTANT
-    TC_INT
-    CHARVALUE
     COMMENT
-    MODEQUAL
-    MULTEQUAL
-    GREATEREQ
-    STRIP
-    COLON
-    EQUALEQUAL
-    RBRACK
-    ELSE
-    PLUSEQUAL
-    SPLIT
-    STRINGVALUE
-    COPY
-    IF
-    RETURN
+    QUOTE
+    STRING
     INDENT
-    for
-    CONCAT
-    MINUSEQUAL
-    LESSEREQ
-    LBRACK
-    WHILE
     CHARING
-    NOT
-    TC_FLOAT
 
 Grammar
 
-Rule 0     S' -> statementAug
-Rule 1     statementAug -> statementTop
-Rule 2     statementTop -> END
-Rule 3     statementTop -> statement
-Rule 4     statement -> declaration statementTop
-Rule 5     statement -> expression statementTop
-Rule 6     expression -> ArithmeticExpression
-Rule 7     expression -> RelationExpression
-Rule 8     booleanValue -> TRUE
-Rule 9     booleanValue -> FALSE
-Rule 10    Iterator -> PLUSPLUS
-Rule 11    Iterator -> MINUSMINUS
-Rule 12    ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN
-Rule 13    RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN
-Rule 14    Compound -> AND
-Rule 15    Compound -> OR
-Rule 16    Operand -> IDENTIFIER
-Rule 17    Operand -> CONSTANT
-Rule 18    Operand -> booleanValue
-Rule 19    ArithmeticOperator -> PLUS
-Rule 20    ArithmeticOperator -> MINUS
-Rule 21    ArithmeticOperator -> MULT
-Rule 22    ArithmeticOperator -> DIV
-Rule 23    ArithmeticOperator -> MOD
-Rule 24    declaration -> identifierDeclaration
-Rule 25    identifierDeclaration -> dataType IDENTIFIER SEMICOLON
-Rule 26    dataType -> INT
-Rule 27    dataType -> BOOLEAN
-Rule 28    dataType -> CHAR
-Rule 29    dataType -> LONG
-Rule 30    dataType -> FLOAT
-Rule 31    dataType -> DOUBLE
+Rule 0     S' -> statementTop
+Rule 1     statementTop -> END
+Rule 2     statementTop -> statement
+Rule 3     statement -> declaration statementTop
+Rule 4     statement -> expression statementTop
+Rule 5     statement -> IfThenElse statementTop
+Rule 6     statement -> AssignmentHead statementTop
+Rule 7     statement -> WhileLoop statementTop
+Rule 8     statement -> ForLoop statementTop
+Rule 9     statement -> DoWhileLoop statementTop
+Rule 10    statement -> unionAdd statementTop
+Rule 11    statement -> unionKeys statementTop
+Rule 12    statement -> typeCastToInt statementTop
+Rule 13    statement -> typecastToFloat statementTop
+Rule 14    statement -> FunctionDefinition statementTop
+Rule 15    statement -> FunctionCall statementTop
+Rule 16    statement -> returnDec statementTop
+Rule 17    statement -> stringOpStatement statementTop
+Rule 18    statement -> READ LPAREN IDENTIFIER RPAREN SEMICOLON statementTop
+Rule 19    statement -> PRINT LPAREN content RPAREN SEMICOLON statementTop
+Rule 20    statement1 -> declaration
+Rule 21    statement1 -> expression
+Rule 22    statement1 -> IfThenElse
+Rule 23    statement1 -> AssignmentHead
+Rule 24    statement1 -> WhileLoop
+Rule 25    statement1 -> ForLoop
+Rule 26    statement1 -> DoWhileLoop
+Rule 27    statement1 -> unionAdd
+Rule 28    statement1 -> unionKeys
+Rule 29    statement1 -> typeCastToInt
+Rule 30    statement1 -> typecastToFloat
+Rule 31    statement1 -> FunctionDefinition
+Rule 32    statement1 -> FunctionCall
+Rule 33    statement1 -> returnDec
+Rule 34    statement1 -> stringOpStatement
+Rule 35    statement1 -> READ LPAREN IDENTIFIER RPAREN SEMICOLON
+Rule 36    statement1 -> PRINT LPAREN content RPAREN SEMICOLON
+Rule 37    content -> toPrint morePrint
+Rule 38    morePrint -> PLUS toPrint morePrint
+Rule 39    morePrint -> EMPTY
+Rule 40    toPrint -> STRINGVALUE
+Rule 41    toPrint -> CONSTANT
+Rule 42    toPrint -> IDENTIFIER
+Rule 43    declaration -> identifierDeclaration
+Rule 44    declaration -> listDec
+Rule 45    declaration -> unionDec
+Rule 46    identifierDeclaration -> dataType IDENTIFIER SEMICOLON
+Rule 47    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK SEMICOLON
+Rule 48    identifierDeclaration -> dataType IDENTIFIER LBRACK CONSTANT RBRACK EQUAL expression SEMICOLON
+Rule 49    identifierDeclaration -> dataType IDENTIFIER EQUAL expression SEMICOLON
+Rule 50    dataType -> INT
+Rule 51    dataType -> BOOLEAN
+Rule 52    dataType -> CHAR
+Rule 53    dataType -> LONG
+Rule 54    dataType -> FLOAT
+Rule 55    dataType -> DOUBLE
+Rule 56    stringOpStatement -> IDENTIFIER stringOP LPAREN string RPAREN SEMICOLON
+Rule 57    stringOpStatement -> IDENTIFIER stringOp LPAREN IDENTIFIER RPAREN SEMICOLON
+Rule 58    stringOp -> SPLIT
+Rule 59    stringOp -> STRIP
+Rule 60    stringOp -> CONCAT
+Rule 61    stringOp -> COPY
+Rule 62    listDec -> IDENTIFIER EQUAL list SEMICOLON
+Rule 63    list -> LBRACK listElem RBRACK
+Rule 64    listElem -> validListUnionValues
+Rule 65    listElem -> validListUnionValues COMMA listElem
+Rule 66    listElem -> EMPTY
+Rule 67    listEval -> IDENTIFIER LBRACK CONSTANT RBRACK
+Rule 68    unionDec -> IDENTIFIER EQUAL union SEMICOLON
+Rule 69    union -> LCURLY unionElement RCURLY
+Rule 70    unionElement -> string EQUAL validListUnionValues
+Rule 71    unionElement -> string EQUAL validListUnionValues COMMA unionElement
+Rule 72    unionElement -> EMPTY
+Rule 73    unionAdd -> IDENTIFIER LBRACK STRINGVALUE RBRACK EQUAL validListUnionValues SEMICOLON
+Rule 74    validListUnionValues -> CONSTANT
+Rule 75    validListUnionValues -> longValue
+Rule 76    validListUnionValues -> floatValue
+Rule 77    validListUnionValues -> doubleValue
+Rule 78    validListUnionValues -> CHARVALUE
+Rule 79    validListUnionValues -> booleanValue
+Rule 80    validListUnionValues -> STRINGVALUE
+Rule 81    validListUnionValues -> listValue
+Rule 82    unionKeys -> IDENTIFIER KEYS SEMICOLON
+Rule 83    unionEval -> IDENTIFIER ARROW string
+Rule 84    typeCastToInt -> TC_INT IDENTIFIER SEMICOLON
+Rule 85    typecastToFloat -> TC_FLOAT IDENTIFIER SEMICOLON
+Rule 86    WhileLoop -> WHILE Condition COLON Body
+Rule 87    Body -> statementMore
+Rule 88    statementMore -> indent statementMoreCont
+Rule 89    statementMore -> END
+Rule 90    statementMoreCont -> statement1 statementMore
+Rule 91    ForLoop -> for LPAREN AssignmentHead Condition Increment RPAREN Body
+Rule 92    DoWhileLoop -> DO COLON Body WHILE Condition SEMICOLON
+Rule 93    Increment -> SEMICOLON Operand Options
+Rule 94    Options -> Iterator
+Rule 95    Options -> AssignmentOperator Operand
+Rule 96    IfThenElse -> IF Condition COLON Body addElif
+Rule 97    addElif -> addElif2
+Rule 98    addElif -> FI
+Rule 99    addElif -> ELSE COLON Body
+Rule 100   addElif2 -> elifClause addElif
+Rule 101   elifClause -> ELIF Condition COLON Body
+Rule 102   Condition -> RelationExpression
+Rule 103   Condition -> LPAREN Condition Compound Condition RPAREN
+Rule 104   Condition -> LPAREN NOT Condition RPAREN
+Rule 105   Operand -> IDENTIFIER
+Rule 106   Operand -> CONSTANT
+Rule 107   Operand -> booleanValue
+Rule 108   Compound -> AND
+Rule 109   Compound -> OR
+Rule 110   Iterator -> PLUSPLUS
+Rule 111   Iterator -> MINUSMINUS
+Rule 112   Iterator -> EMPTY
+Rule 113   AssignmentHead -> BAR IDENTIFIER AssignmentOption BAR SEMICOLON
+Rule 114   AssignmentOption -> EQUAL AssignmentOptionChain
+Rule 115   AssignmentOption -> AssignmentOperator AssignmentOptions2
+Rule 116   AssignmentOptions2 -> CONSTANT
+Rule 117   AssignmentOptions2 -> ArithmeticExpression
+Rule 118   AssignmentOptionChain -> listEval
+Rule 119   AssignmentOptionChain -> Function
+Rule 120   AssignmentOptionChain -> unionEval
+Rule 121   AssignmentOptionChain -> AssignmentOptions2
+Rule 122   AssignmentOperator -> PLUSEQUAL
+Rule 123   AssignmentOperator -> MINUSEQUAL
+Rule 124   AssignmentOperator -> MULTEQUAL
+Rule 125   AssignmentOperator -> DIVEQUAL
+Rule 126   AssignmentOperator -> MODEQUAL
+Rule 127   expression -> ArithmeticExpression
+Rule 128   expression -> listEval
+Rule 129   expression -> list
+Rule 130   expression -> union
+Rule 131   expression -> RelationExpression
+Rule 132   RelationExpression -> LPAREN Operand RelationOperator Operand RPAREN
+Rule 133   ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN
+Rule 134   ArithmeticOperator -> PLUS
+Rule 135   ArithmeticOperator -> MINUS
+Rule 136   ArithmeticOperator -> MULT
+Rule 137   ArithmeticOperator -> DIV
+Rule 138   ArithmeticOperator -> MOD
+Rule 139   RelationOperator -> EQUALEQUAL
+Rule 140   RelationOperator -> EQUAL
+Rule 141   RelationOperator -> LESSTHAN
+Rule 142   RelationOperator -> GREATERTHAN
+Rule 143   RelationOperator -> GREATEREQ
+Rule 144   RelationOperator -> LESSEREQ
+Rule 145   RelationOperator -> NOTEQ
+Rule 146   FunctionDefinition -> dataType Function COLON Body
+Rule 147   Function -> IDENTIFIER LPAREN Parameter RPAREN
+Rule 148   Parameter -> dataType IDENTIFIER
+Rule 149   Parameter -> dataType IDENTIFIER COMMA Parameter
+Rule 150   Parameter -> EMPTY
+Rule 151   FunctionCall -> IDENTIFIER LPAREN FunctionCallParameter RPAREN SEMICOLON
+Rule 152   FunctionCallParameter -> IDENTIFIER
+Rule 153   FunctionCallParameter -> IDENTIFIER COMMA p_FunctionCallParameter
+Rule 154   FunctionCallParameter -> EMPTY
+Rule 155   returnDec -> RETURN CONSTANT SEMICOLON
+Rule 156   returnDec -> RETURN IDENTIFIER SEMICOLON
+Rule 157   returnDec -> RETURN expression SEMICOLON
+Rule 158   booleanValue -> TRUE
+Rule 159   booleanValue -> FALSE
 
 Terminals, with rules where they appear
 
-AND                  : 14
-BOOLEAN              : 27
-CHAR                 : 28
+AND                  : 108
+ARROW                : 83
+BAR                  : 113 113
+BOOLEAN              : 51
+CHAR                 : 52
 CHARING              : 
-CHARVALUE            : 
-COLON                : 
+CHARVALUE            : 78
+COLON                : 86 92 96 99 101 146
+COMMA                : 65 71 149 153
 COMMENT              : 
-CONCAT               : 
-CONSTANT             : 17
-COPY                 : 
-DIV                  : 22
-DIVEQUAL             : 
-DO                   : 
-DOUBLE               : 31
-ELIF                 : 
-ELSE                 : 
-END                  : 2
-EQUALEQUAL           : 
-FALSE                : 9
-FI                   : 
-FLOAT                : 30
-GREATEREQ            : 
-GREATERTHAN          : 12
-IDENTIFIER           : 16 25
-IF                   : 
+CONCAT               : 60
+CONSTANT             : 41 47 48 67 74 106 116 155
+COPY                 : 61
+DIV                  : 137
+DIVEQUAL             : 125
+DO                   : 92
+DOUBLE               : 55
+ELIF                 : 101
+ELSE                 : 99
+EMPTY                : 39 66 72 112 150 154
+END                  : 1 89
+EQUAL                : 48 49 62 68 70 71 73 114 140
+EQUALEQUAL           : 139
+FALSE                : 159
+FI                   : 98
+FLOAT                : 54
+GREATEREQ            : 143
+GREATERTHAN          : 133 142
+IDENTIFIER           : 18 35 42 46 47 48 49 56 57 57 62 67 68 73 82 83 84 85 105 113 147 148 149 151 152 153 156
+IF                   : 96
 INDENT               : 
-INT                  : 26
-KEYS                 : 
-LBRACK               : 
-LESSEREQ             : 
-LESSTHAN             : 12
-LONG                 : 29
-LPAREN               : 13
-MINUS                : 20
-MINUSEQUAL           : 
-MINUSMINUS           : 11
-MOD                  : 23
-MODEQUAL             : 
-MULT                 : 21
-MULTEQUAL            : 
+INT                  : 50
+KEYS                 : 82
+LBRACK               : 47 48 63 67 73
+LCURLY               : 69
+LESSEREQ             : 144
+LESSTHAN             : 133 141
+LONG                 : 53
+LPAREN               : 18 19 35 36 56 57 91 103 104 132 147 151
+MINUS                : 135
+MINUSEQUAL           : 123
+MINUSMINUS           : 111
+MOD                  : 138
+MODEQUAL             : 126
+MULT                 : 136
+MULTEQUAL            : 124
 NEGCONSTANT          : 
-NOT                  : 
-NOTEQ                : 
-OR                   : 15
-PLUS                 : 19
-PLUSEQUAL            : 
-PLUSPLUS             : 10
-RBRACK               : 
-RETURN               : 
-RPAREN               : 13
-SEMICOLON            : 25
-SPLIT                : 
-STRINGVALUE          : 
-STRIP                : 
-TC_FLOAT             : 
-TC_INT               : 
-TRUE                 : 8
-WHILE                : 
+NOT                  : 104
+NOTEQ                : 145
+OR                   : 109
+PLUS                 : 38 134
+PLUSEQUAL            : 122
+PLUSPLUS             : 110
+PRINT                : 19 36
+QUOTE                : 
+RBRACK               : 47 48 63 67 73
+RCURLY               : 69
+READ                 : 18 35
+RETURN               : 155 156 157
+RPAREN               : 18 19 35 36 56 57 91 103 104 132 147 151
+SEMICOLON            : 18 19 35 36 46 47 48 49 56 57 62 68 73 82 84 85 92 93 113 151 155 156 157
+SPLIT                : 58
+STRING               : 
+STRINGVALUE          : 40 73 80
+STRIP                : 59
+TC_FLOAT             : 85
+TC_INT               : 84
+TRUE                 : 158
+WHILE                : 86 92
 error                : 
-for                  : 
+for                  : 91
 
 Nonterminals, with rules where they appear
 
-ArithmeticExpression : 6
-ArithmeticOperator   : 12 13
-Compound             : 
-Iterator             : 
-Operand              : 12 12 13 13
-RelationExpression   : 7
-booleanValue         : 18
-dataType             : 25
-declaration          : 4
-expression           : 5
-identifierDeclaration : 24
-statement            : 3
-statementAug         : 0
-statementTop         : 1 4 5
-
-Parsing method: LALR
-
-state 0
-
-    (0) S' -> . statementAug
-    (1) statementAug -> . statementTop
-    (2) statementTop -> . END
-    (3) statementTop -> . statement
-    (4) statement -> . declaration statementTop
-    (5) statement -> . expression statementTop
-    (24) declaration -> . identifierDeclaration
-    (6) expression -> . ArithmeticExpression
-    (7) expression -> . RelationExpression
-    (25) identifierDeclaration -> . dataType IDENTIFIER SEMICOLON
-    (12) ArithmeticExpression -> . LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN
-    (13) RelationExpression -> . LPAREN Operand ArithmeticOperator Operand RPAREN
-    (26) dataType -> . INT
-    (27) dataType -> . BOOLEAN
-    (28) dataType -> . CHAR
-    (29) dataType -> . LONG
-    (30) dataType -> . FLOAT
-    (31) dataType -> . DOUBLE
-
-    END             shift and go to state 6
-    LESSTHAN        shift and go to state 3
-    LPAREN          shift and go to state 11
-    INT             shift and go to state 16
-    BOOLEAN         shift and go to state 17
-    CHAR            shift and go to state 2
-    LONG            shift and go to state 4
-    FLOAT           shift and go to state 15
-    DOUBLE          shift and go to state 14
-
-    statementTop                   shift and go to state 1
-    statementAug                   shift and go to state 13
-    ArithmeticExpression           shift and go to state 8
-    RelationExpression             shift and go to state 9
-    dataType                       shift and go to state 7
-    identifierDeclaration          shift and go to state 10
-    statement                      shift and go to state 5
-    declaration                    shift and go to state 12
-    expression                     shift and go to state 18
-
-state 1
-
-    (1) statementAug -> statementTop .
-
-    $end            reduce using rule 1 (statementAug -> statementTop .)
-
-
-state 2
-
-    (28) dataType -> CHAR .
-
-    IDENTIFIER      reduce using rule 28 (dataType -> CHAR .)
-
-
-state 3
-
-    (12) ArithmeticExpression -> LESSTHAN . Operand ArithmeticOperator Operand GREATERTHAN
-    (16) Operand -> . IDENTIFIER
-    (17) Operand -> . CONSTANT
-    (18) Operand -> . booleanValue
-    (8) booleanValue -> . TRUE
-    (9) booleanValue -> . FALSE
-
-    IDENTIFIER      shift and go to state 23
-    CONSTANT        shift and go to state 20
-    TRUE            shift and go to state 24
-    FALSE           shift and go to state 22
-
-    Operand                        shift and go to state 21
-    booleanValue                   shift and go to state 19
-
-state 4
-
-    (29) dataType -> LONG .
-
-    IDENTIFIER      reduce using rule 29 (dataType -> LONG .)
-
-
-state 5
-
-    (3) statementTop -> statement .
-
-    $end            reduce using rule 3 (statementTop -> statement .)
-
-
-state 6
-
-    (2) statementTop -> END .
-
-    $end            reduce using rule 2 (statementTop -> END .)
-
-
-state 7
-
-    (25) identifierDeclaration -> dataType . IDENTIFIER SEMICOLON
-
-    IDENTIFIER      shift and go to state 25
-
-
-state 8
-
-    (6) expression -> ArithmeticExpression .
-
-    END             reduce using rule 6 (expression -> ArithmeticExpression .)
-    LESSTHAN        reduce using rule 6 (expression -> ArithmeticExpression .)
-    LPAREN          reduce using rule 6 (expression -> ArithmeticExpression .)
-    INT             reduce using rule 6 (expression -> ArithmeticExpression .)
-    BOOLEAN         reduce using rule 6 (expression -> ArithmeticExpression .)
-    CHAR            reduce using rule 6 (expression -> ArithmeticExpression .)
-    LONG            reduce using rule 6 (expression -> ArithmeticExpression .)
-    FLOAT           reduce using rule 6 (expression -> ArithmeticExpression .)
-    DOUBLE          reduce using rule 6 (expression -> ArithmeticExpression .)
-
-
-state 9
-
-    (7) expression -> RelationExpression .
-
-    END             reduce using rule 7 (expression -> RelationExpression .)
-    LESSTHAN        reduce using rule 7 (expression -> RelationExpression .)
-    LPAREN          reduce using rule 7 (expression -> RelationExpression .)
-    INT             reduce using rule 7 (expression -> RelationExpression .)
-    BOOLEAN         reduce using rule 7 (expression -> RelationExpression .)
-    CHAR            reduce using rule 7 (expression -> RelationExpression .)
-    LONG            reduce using rule 7 (expression -> RelationExpression .)
-    FLOAT           reduce using rule 7 (expression -> RelationExpression .)
-    DOUBLE          reduce using rule 7 (expression -> RelationExpression .)
-
-
-state 10
-
-    (24) declaration -> identifierDeclaration .
-
-    END             reduce using rule 24 (declaration -> identifierDeclaration .)
-    LESSTHAN        reduce using rule 24 (declaration -> identifierDeclaration .)
-    LPAREN          reduce using rule 24 (declaration -> identifierDeclaration .)
-    INT             reduce using rule 24 (declaration -> identifierDeclaration .)
-    BOOLEAN         reduce using rule 24 (declaration -> identifierDeclaration .)
-    CHAR            reduce using rule 24 (declaration -> identifierDeclaration .)
-    LONG            reduce using rule 24 (declaration -> identifierDeclaration .)
-    FLOAT           reduce using rule 24 (declaration -> identifierDeclaration .)
-    DOUBLE          reduce using rule 24 (declaration -> identifierDeclaration .)
-
-
-state 11
-
-    (13) RelationExpression -> LPAREN . Operand ArithmeticOperator Operand RPAREN
-    (16) Operand -> . IDENTIFIER
-    (17) Operand -> . CONSTANT
-    (18) Operand -> . booleanValue
-    (8) booleanValue -> . TRUE
-    (9) booleanValue -> . FALSE
-
-    IDENTIFIER      shift and go to state 23
-    CONSTANT        shift and go to state 20
-    TRUE            shift and go to state 24
-    FALSE           shift and go to state 22
-
-    Operand                        shift and go to state 26
-    booleanValue                   shift and go to state 19
-
-state 12
-
-    (4) statement -> declaration . statementTop
-    (2) statementTop -> . END
-    (3) statementTop -> . statement
-    (4) statement -> . declaration statementTop
-    (5) statement -> . expression statementTop
-    (24) declaration -> . identifierDeclaration
-    (6) expression -> . ArithmeticExpression
-    (7) expression -> . RelationExpression
-    (25) identifierDeclaration -> . dataType IDENTIFIER SEMICOLON
-    (12) ArithmeticExpression -> . LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN
-    (13) RelationExpression -> . LPAREN Operand ArithmeticOperator Operand RPAREN
-    (26) dataType -> . INT
-    (27) dataType -> . BOOLEAN
-    (28) dataType -> . CHAR
-    (29) dataType -> . LONG
-    (30) dataType -> . FLOAT
-    (31) dataType -> . DOUBLE
-
-    END             shift and go to state 6
-    LESSTHAN        shift and go to state 3
-    LPAREN          shift and go to state 11
-    INT             shift and go to state 16
-    BOOLEAN         shift and go to state 17
-    CHAR            shift and go to state 2
-    LONG            shift and go to state 4
-    FLOAT           shift and go to state 15
-    DOUBLE          shift and go to state 14
-
-    statementTop                   shift and go to state 27
-    dataType                       shift and go to state 7
-    ArithmeticExpression           shift and go to state 8
-    RelationExpression             shift and go to state 9
-    identifierDeclaration          shift and go to state 10
-    statement                      shift and go to state 5
-    declaration                    shift and go to state 12
-    expression                     shift and go to state 18
-
-state 13
-
-    (0) S' -> statementAug .
-
-
-
-state 14
-
-    (31) dataType -> DOUBLE .
-
-    IDENTIFIER      reduce using rule 31 (dataType -> DOUBLE .)
-
-
-state 15
-
-    (30) dataType -> FLOAT .
-
-    IDENTIFIER      reduce using rule 30 (dataType -> FLOAT .)
-
-
-state 16
-
-    (26) dataType -> INT .
-
-    IDENTIFIER      reduce using rule 26 (dataType -> INT .)
-
-
-state 17
-
-    (27) dataType -> BOOLEAN .
-
-    IDENTIFIER      reduce using rule 27 (dataType -> BOOLEAN .)
-
-
-state 18
-
-    (5) statement -> expression . statementTop
-    (2) statementTop -> . END
-    (3) statementTop -> . statement
-    (4) statement -> . declaration statementTop
-    (5) statement -> . expression statementTop
-    (24) declaration -> . identifierDeclaration
-    (6) expression -> . ArithmeticExpression
-    (7) expression -> . RelationExpression
-    (25) identifierDeclaration -> . dataType IDENTIFIER SEMICOLON
-    (12) ArithmeticExpression -> . LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN
-    (13) RelationExpression -> . LPAREN Operand ArithmeticOperator Operand RPAREN
-    (26) dataType -> . INT
-    (27) dataType -> . BOOLEAN
-    (28) dataType -> . CHAR
-    (29) dataType -> . LONG
-    (30) dataType -> . FLOAT
-    (31) dataType -> . DOUBLE
-
-    END             shift and go to state 6
-    LESSTHAN        shift and go to state 3
-    LPAREN          shift and go to state 11
-    INT             shift and go to state 16
-    BOOLEAN         shift and go to state 17
-    CHAR            shift and go to state 2
-    LONG            shift and go to state 4
-    FLOAT           shift and go to state 15
-    DOUBLE          shift and go to state 14
-
-    statementTop                   shift and go to state 28
-    dataType                       shift and go to state 7
-    ArithmeticExpression           shift and go to state 8
-    RelationExpression             shift and go to state 9
-    identifierDeclaration          shift and go to state 10
-    statement                      shift and go to state 5
-    declaration                    shift and go to state 12
-    expression                     shift and go to state 18
-
-state 19
-
-    (18) Operand -> booleanValue .
-
-    PLUS            reduce using rule 18 (Operand -> booleanValue .)
-    MINUS           reduce using rule 18 (Operand -> booleanValue .)
-    MULT            reduce using rule 18 (Operand -> booleanValue .)
-    DIV             reduce using rule 18 (Operand -> booleanValue .)
-    MOD             reduce using rule 18 (Operand -> booleanValue .)
-    RPAREN          reduce using rule 18 (Operand -> booleanValue .)
-    GREATERTHAN     reduce using rule 18 (Operand -> booleanValue .)
-
-
-state 20
-
-    (17) Operand -> CONSTANT .
-
-    PLUS            reduce using rule 17 (Operand -> CONSTANT .)
-    MINUS           reduce using rule 17 (Operand -> CONSTANT .)
-    MULT            reduce using rule 17 (Operand -> CONSTANT .)
-    DIV             reduce using rule 17 (Operand -> CONSTANT .)
-    MOD             reduce using rule 17 (Operand -> CONSTANT .)
-    RPAREN          reduce using rule 17 (Operand -> CONSTANT .)
-    GREATERTHAN     reduce using rule 17 (Operand -> CONSTANT .)
-
-
-state 21
-
-    (12) ArithmeticExpression -> LESSTHAN Operand . ArithmeticOperator Operand GREATERTHAN
-    (19) ArithmeticOperator -> . PLUS
-    (20) ArithmeticOperator -> . MINUS
-    (21) ArithmeticOperator -> . MULT
-    (22) ArithmeticOperator -> . DIV
-    (23) ArithmeticOperator -> . MOD
-
-    PLUS            shift and go to state 29
-    MINUS           shift and go to state 32
-    MULT            shift and go to state 33
-    DIV             shift and go to state 31
-    MOD             shift and go to state 34
-
-    ArithmeticOperator             shift and go to state 30
-
-state 22
-
-    (9) booleanValue -> FALSE .
-
-    GREATERTHAN     reduce using rule 9 (booleanValue -> FALSE .)
-    RPAREN          reduce using rule 9 (booleanValue -> FALSE .)
-    PLUS            reduce using rule 9 (booleanValue -> FALSE .)
-    MINUS           reduce using rule 9 (booleanValue -> FALSE .)
-    MULT            reduce using rule 9 (booleanValue -> FALSE .)
-    DIV             reduce using rule 9 (booleanValue -> FALSE .)
-    MOD             reduce using rule 9 (booleanValue -> FALSE .)
-
-
-state 23
-
-    (16) Operand -> IDENTIFIER .
-
-    PLUS            reduce using rule 16 (Operand -> IDENTIFIER .)
-    MINUS           reduce using rule 16 (Operand -> IDENTIFIER .)
-    MULT            reduce using rule 16 (Operand -> IDENTIFIER .)
-    DIV             reduce using rule 16 (Operand -> IDENTIFIER .)
-    MOD             reduce using rule 16 (Operand -> IDENTIFIER .)
-    RPAREN          reduce using rule 16 (Operand -> IDENTIFIER .)
-    GREATERTHAN     reduce using rule 16 (Operand -> IDENTIFIER .)
-
-
-state 24
-
-    (8) booleanValue -> TRUE .
-
-    GREATERTHAN     reduce using rule 8 (booleanValue -> TRUE .)
-    RPAREN          reduce using rule 8 (booleanValue -> TRUE .)
-    PLUS            reduce using rule 8 (booleanValue -> TRUE .)
-    MINUS           reduce using rule 8 (booleanValue -> TRUE .)
-    MULT            reduce using rule 8 (booleanValue -> TRUE .)
-    DIV             reduce using rule 8 (booleanValue -> TRUE .)
-    MOD             reduce using rule 8 (booleanValue -> TRUE .)
-
-
-state 25
-
-    (25) identifierDeclaration -> dataType IDENTIFIER . SEMICOLON
-
-    SEMICOLON       shift and go to state 35
-
-
-state 26
-
-    (13) RelationExpression -> LPAREN Operand . ArithmeticOperator Operand RPAREN
-    (19) ArithmeticOperator -> . PLUS
-    (20) ArithmeticOperator -> . MINUS
-    (21) ArithmeticOperator -> . MULT
-    (22) ArithmeticOperator -> . DIV
-    (23) ArithmeticOperator -> . MOD
-
-    PLUS            shift and go to state 29
-    MINUS           shift and go to state 32
-    MULT            shift and go to state 33
-    DIV             shift and go to state 31
-    MOD             shift and go to state 34
-
-    ArithmeticOperator             shift and go to state 36
-
-state 27
-
-    (4) statement -> declaration statementTop .
-
-    $end            reduce using rule 4 (statement -> declaration statementTop .)
-
-
-state 28
-
-    (5) statement -> expression statementTop .
-
-    $end            reduce using rule 5 (statement -> expression statementTop .)
-
-
-state 29
-
-    (19) ArithmeticOperator -> PLUS .
-
-    IDENTIFIER      reduce using rule 19 (ArithmeticOperator -> PLUS .)
-    CONSTANT        reduce using rule 19 (ArithmeticOperator -> PLUS .)
-    TRUE            reduce using rule 19 (ArithmeticOperator -> PLUS .)
-    FALSE           reduce using rule 19 (ArithmeticOperator -> PLUS .)
-
-
-state 30
-
-    (12) ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator . Operand GREATERTHAN
-    (16) Operand -> . IDENTIFIER
-    (17) Operand -> . CONSTANT
-    (18) Operand -> . booleanValue
-    (8) booleanValue -> . TRUE
-    (9) booleanValue -> . FALSE
-
-    IDENTIFIER      shift and go to state 23
-    CONSTANT        shift and go to state 20
-    TRUE            shift and go to state 24
-    FALSE           shift and go to state 22
-
-    Operand                        shift and go to state 37
-    booleanValue                   shift and go to state 19
-
-state 31
-
-    (22) ArithmeticOperator -> DIV .
-
-    IDENTIFIER      reduce using rule 22 (ArithmeticOperator -> DIV .)
-    CONSTANT        reduce using rule 22 (ArithmeticOperator -> DIV .)
-    TRUE            reduce using rule 22 (ArithmeticOperator -> DIV .)
-    FALSE           reduce using rule 22 (ArithmeticOperator -> DIV .)
-
-
-state 32
-
-    (20) ArithmeticOperator -> MINUS .
-
-    IDENTIFIER      reduce using rule 20 (ArithmeticOperator -> MINUS .)
-    CONSTANT        reduce using rule 20 (ArithmeticOperator -> MINUS .)
-    TRUE            reduce using rule 20 (ArithmeticOperator -> MINUS .)
-    FALSE           reduce using rule 20 (ArithmeticOperator -> MINUS .)
-
-
-state 33
-
-    (21) ArithmeticOperator -> MULT .
-
-    IDENTIFIER      reduce using rule 21 (ArithmeticOperator -> MULT .)
-    CONSTANT        reduce using rule 21 (ArithmeticOperator -> MULT .)
-    TRUE            reduce using rule 21 (ArithmeticOperator -> MULT .)
-    FALSE           reduce using rule 21 (ArithmeticOperator -> MULT .)
-
-
-state 34
-
-    (23) ArithmeticOperator -> MOD .
-
-    IDENTIFIER      reduce using rule 23 (ArithmeticOperator -> MOD .)
-    CONSTANT        reduce using rule 23 (ArithmeticOperator -> MOD .)
-    TRUE            reduce using rule 23 (ArithmeticOperator -> MOD .)
-    FALSE           reduce using rule 23 (ArithmeticOperator -> MOD .)
-
-
-state 35
-
-    (25) identifierDeclaration -> dataType IDENTIFIER SEMICOLON .
-
-    END             reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    LESSTHAN        reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    LPAREN          reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    INT             reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    BOOLEAN         reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    CHAR            reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    LONG            reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    FLOAT           reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-    DOUBLE          reduce using rule 25 (identifierDeclaration -> dataType IDENTIFIER SEMICOLON .)
-
-
-state 36
-
-    (13) RelationExpression -> LPAREN Operand ArithmeticOperator . Operand RPAREN
-    (16) Operand -> . IDENTIFIER
-    (17) Operand -> . CONSTANT
-    (18) Operand -> . booleanValue
-    (8) booleanValue -> . TRUE
-    (9) booleanValue -> . FALSE
-
-    IDENTIFIER      shift and go to state 23
-    CONSTANT        shift and go to state 20
-    TRUE            shift and go to state 24
-    FALSE           shift and go to state 22
-
-    Operand                        shift and go to state 38
-    booleanValue                   shift and go to state 19
-
-state 37
-
-    (12) ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand . GREATERTHAN
-
-    GREATERTHAN     shift and go to state 39
-
-
-state 38
-
-    (13) RelationExpression -> LPAREN Operand ArithmeticOperator Operand . RPAREN
-
-    RPAREN          shift and go to state 40
-
-
-state 39
-
-    (12) ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .
-
-    END             reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    LESSTHAN        reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    LPAREN          reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    INT             reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    BOOLEAN         reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    CHAR            reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    LONG            reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    FLOAT           reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-    DOUBLE          reduce using rule 12 (ArithmeticExpression -> LESSTHAN Operand ArithmeticOperator Operand GREATERTHAN .)
-
-
-state 40
-
-    (13) RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .
-
-    END             reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    LESSTHAN        reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    LPAREN          reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    INT             reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    BOOLEAN         reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    CHAR            reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    LONG            reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    FLOAT           reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
-    DOUBLE          reduce using rule 13 (RelationExpression -> LPAREN Operand ArithmeticOperator Operand RPAREN .)
+ArithmeticExpression : 117 127
+ArithmeticOperator   : 133
+AssignmentHead       : 6 23 91
+AssignmentOperator   : 95 115
+AssignmentOption     : 113
+AssignmentOptionChain : 114
+AssignmentOptions2   : 115 121
+Body                 : 86 91 92 96 99 101 146
+Compound             : 103
+Condition            : 86 91 92 96 101 103 103 104
+DoWhileLoop          : 9 26
+ForLoop              : 8 25
+Function             : 119 146
+FunctionCall         : 15 32
+FunctionCallParameter : 151
+FunctionDefinition   : 14 31
+IfThenElse           : 5 22
+Increment            : 91
+Iterator             : 94
+Operand              : 93 95 132 132 133 133
+Options              : 93
+Parameter            : 147 149
+RelationExpression   : 102 131
+RelationOperator     : 132
+WhileLoop            : 7 24
+addElif              : 96 100
+addElif2             : 97
+booleanValue         : 79 107
+content              : 19 36
+dataType             : 46 47 48 49 146 148 149
+declaration          : 3 20
+doubleValue          : 77
+elifClause           : 100
+expression           : 4 21 48 49 157
+floatValue           : 76
+identifierDeclaration : 43
+indent               : 88
+list                 : 62 129
+listDec              : 44
+listElem             : 63 65
+listEval             : 118 128
+listValue            : 81
+longValue            : 75
+morePrint            : 37 38
+p_FunctionCallParameter : 153
+returnDec            : 16 33
+statement            : 2
+statement1           : 90
+statementMore        : 87 90
+statementMoreCont    : 88
+statementTop         : 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 0
+string               : 56 70 71 83
+stringOP             : 56
+stringOp             : 57
+stringOpStatement    : 17 34
+toPrint              : 37 38
+typeCastToInt        : 12 29
+typecastToFloat      : 13 30
+union                : 68 130
+unionAdd             : 10 27
+unionDec             : 45
+unionElement         : 69 71
+unionEval            : 120
+unionKeys            : 11 28
+validListUnionValues : 64 65 70 71 73
 
