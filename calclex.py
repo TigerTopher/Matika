@@ -62,7 +62,7 @@ reserved = {
 
 }
 
-tokens = ['EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
+tokens = ['FLOATVALUE', 'EMPTY', 'ARROW', 'EQUAL', 'COMMA', 'BAR', 'QUOTE', 'RCURLY', 'LCURLY', 'GREATERTHAN', 'LESSTHAN' ,'MOD','DIV','MULT','MINUS', 'PLUS', 'MINUSEQUAL', 'MULTEQUAL', 'DIVEQUAL', 'MODEQUAL', 'GREATEREQ', 'LESSEREQ', 'NOTEQ', 'COMMENT', 'MINUSMINUS', 'INDENT', 'EQUALEQUAL', 'PLUSEQUAL','PLUSPLUS', 'STRINGVALUE', 'LBRACK', 'RBRACK', 'SEMICOLON', 'COLON' , 'LPAREN', 'RPAREN', 'CONSTANT', 'IDENTIFIER']+ list(reserved.values())
 
 # Regular expression rules for simple tokens
 
@@ -115,6 +115,16 @@ def t_COMMENT(t):
     pass
     # No return value. Token discarded
 
+def t_FLOATVALUE(t):
+  r'[+-]?(\d+(\.\d*)|\.\d+)([eE][+-]?\d+)?'
+  t.value = float(t.value)
+  return t
+
+def t_CONSTANT(t):
+  r'[-]*[0-9][0-9]*'
+  t.value = int(t.value)    
+  return t
+
 def t_STRINGVALUE(t):
   r'".+"'
   t.value = (t.value.lstrip("\"").rstrip("\""))
@@ -125,10 +135,6 @@ def t_IDENTIFIER(t):
     t.type = reserved.get(t.value,'IDENTIFIER')    # Check for reserved words
     return t
 
-def t_CONSTANT(t):
-  r'[-]*[0-9][0-9]*'
-  t.value = int(t.value)    
-  return t
 
 
 # A regular expression rule with some action code
